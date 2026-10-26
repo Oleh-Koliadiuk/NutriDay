@@ -1,0 +1,36 @@
+.background-blur {
+  display: none;
+}
+@media (prefers-reduced-motion: no-preference) and (min-width: 761px) {
+  .hero-panel::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 17%;
+    right: -72px;
+    width: 220px;
+    height: 220px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 50%;
+    animation: orbit 28s linear infinite;
+    pointer-events: none;
+  }
+  .hero-panel::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: calc(17% + 28px);
+    right: -44px;
+    width: 164px;
+    height: 164px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 50%;
+    animation: orbit 20s linear infinite reverse;
+    pointer-events: none;
+  }
+  @keyframes orbit {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

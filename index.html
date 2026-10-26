@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f8f8f4" />
+    <meta name="description" content="NutriDay — щоденний баланс харчування без зайвих складнощів." />
+    <link rel="icon" href="/assets/favicon/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/assets/site.webmanifest" />
+    <title>NutriDay — твій щоденний баланс</title>
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/login.css" />
+    <link rel="stylesheet" href="/css/decorations.css" />
+    <link rel="stylesheet" href="/css/pages.css" />
+    <script type="module" src="/js/app.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand-wrap" href="/" aria-label="NutriDay — головна">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none">
+              <path d="M10 24.5C10 15.8 16.2 9.3 27 8c-.5 10.8-6.7 17.2-15.3 17.2H10Z" fill="currentColor" />
+              <path d="M10 29c3.2-6.8 7.6-11.2 14.1-15" stroke="#F8F8F4" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </span>
+          <span class="brand-copy"><strong>NutriDay</strong></span>
+        </a>
+
+        <div class="header-links">
+          <nav class="site-nav" aria-label="Інформація про сайт">
+            <a href="#about" data-i18n="siteAbout">Про нас</a>
+            <a href="#how-it-works" data-i18n="siteHow">Як це працює</a>
+            <a href="#help" data-i18n="siteHelp">Допомога</a>
+            <a href="#contacts" data-i18n="siteContacts">Контакти</a>
+          </nav>
+          <nav class="dashboard-nav" aria-label="Навігація кабінету">
+            <a href="#profile" data-page-link="profile" data-i18n="navProfile">Профіль</a>
+            <a href="#records" data-page-link="records" data-i18n="navRecords">Мої записи</a>
+            <a href="#add" data-page-link="add" data-i18n="navAddMeal">Додати страву</a>
+            <a href="#recipe" data-page-link="recipe" data-i18n="navRecipes">Рецепти</a>
+          </nav>
+        </div>
+
+        <div class="header-tools">
+          <label class="language-control" for="language-select">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="7.25" stroke="currentColor" stroke-width="1.5" />
+            <path d="M2.9 10h14.2M10 2.8c1.8 1.9 2.7 4.3 2.7 7.2s-.9 5.3-2.7 7.2C8.2 15.3 7.3 12.9 7.3 10s.9-5.3 2.7-7.2Z" stroke="currentColor" stroke-width="1.35" />
+          </svg>
+          <span class="sr-only" data-i18n="languageLabel">Мова</span>
+          <select id="language-select" aria-label="Мова">
+            <option value="uk">Українська</option>
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+          </select>
+          <svg class="select-chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="m1 1.5 5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </label>
+          <button id="logout-btn" class="ghost-btn" type="button" data-i18n="logoutButton">Вийти</button>
+        </div>
+      </header>
+
+      <main id="app-main" class="app-layout">
+        <section id="auth-panel" class="auth-page">
+          <aside id="features" class="hero-panel">
+            <img
+              class="hero-image"
+              src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=2000&q=88"
+              alt="Свіжий салат з овочами, авокадо та зеленню" data-i18n-alt="heroImageAlt"
+            />
+            <div class="hero-scrim"></div>
+            <div class="hero-topline"><span class="live-dot"></span><span data-i18n="heroBadge">Твій ритм. Твій баланс.</span></div>
+            <div class="hero-copy">
+              <p class="eyebrow hero-eyebrow" data-i18n="eyebrow">Смачно. Просто. Усвідомлено.</p>
+              <h1 data-i18n="mainTitle">Турбота про себе — це щоденний вибір.</h1>
+              <p class="hero-lead" data-i18n="heroLead">Розумій, що на твоїй тарілці, і знаходь свій баланс без суворих правил.</p>
+              <div class="hero-points" id="hero-points">
+                <div class="hero-point"><span class="point-icon" aria-hidden="true">✳</span><span data-i18n="heroPointOne">Персональна денна норма</span></div>
+                <div class="hero-point"><span class="point-icon" aria-hidden="true">✳</span><span data-i18n="heroPointTwo">Аналіз страв текстом і фото</span></div>
+              </div>
+            </div>
+            <div class="hero-bottomline">
+              <div class="hero-stat"><strong>01</strong><span data-i18n="heroStat">маленький крок щодня</span></div>
+              <a class="photo-credit" href="https://unsplash.com/photos/bowl-of-vegetable-salads-IGfIGP5ONV0" target="_blank" rel="noreferrer">Photo: Anna Pelzer / Unsplash</a>
+            </div>
+          </aside>
+
+          <section class="auth-area" aria-labelledby="auth-title">
+            <div class="auth-card">
+              <div class="auth-heading">
+                <span class="auth-kicker"><span class="kicker-line"></span><span data-i18n="authKicker">Твій особистий простір</span></span>
+                <h2 id="auth-title" data-i18n="authTitle">Почни з турботи про себе</h2>
+                <p data-i18n="authDescription">Створи профіль, щоб отримати персональну денну норму та відстежувати харчування.</p>
+              </div>
+
+              <div class="auth-toggle" role="tablist" aria-label="Вибір входу або реєстрації">
+                <button class="tab-button active" type="button" data-tab="register" data-i18n="registerTab">Створити профіль</button>
+                <button class="tab-button" type="button" data-tab="login" data-i18n="loginTab">Увійти</button>
+              </div>
+
+              <form id="register-form" class="auth-form active" novalidate>
+                <div class="input-group">
+                  <label for="register-name" data-i18n="nameLabel">Імʼя</label>
+                  <input id="register-name" name="name" type="text" autocomplete="name" placeholder="" data-i18n-placeholder="namePlaceholder" required />
+                </div>
+                <div class="input-group">
+                  <label for="register-password" data-i18n="passwordLabel">Пароль</label>
+                  <input id="register-password" name="password" type="password" autocomplete="new-password" placeholder="" data-i18n-placeholder="passwordPlaceholder" required />
+                </div>
+                <div class="form-details-label" data-i18n="optionalDetails">Для точнішої денної норми · необовʼязково</div>
+                <div class="two-columns">
+                  <div class="input-group compact-group"><label for="register-age" data-i18n="ageLabel">Вік</label><input id="register-age" name="age" type="number" min="10" max="120" inputmode="numeric" /></div>
+                  <div class="input-group compact-group"><label for="register-height" data-i18n="heightLabel">Зріст, см</label><input id="register-height" name="height" type="number" min="100" max="260" inputmode="numeric" /></div>
+                  <div class="input-group compact-group weight-group"><label for="register-weight" data-i18n="weightLabel">Вага, кг</label><input id="register-weight" name="weight" type="number" min="30" max="250" step="0.1" inputmode="decimal" /></div>
+                </div>
+                <div class="button-row">
+                  <button type="submit" class="primary-btn"><span data-i18n="registerButton">Створити акаунт</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h12m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+                  <button type="button" class="secondary-btn" id="skip-btn" data-i18n="skipButton">Пропустити</button>
+                </div>
+              </form>
+
+              <form id="login-form" class="auth-form" novalidate>
+                <div class="input-group">
+                  <label for="login-name" data-i18n="nameLabel">Імʼя</label>
+                  <input id="login-name" name="name" type="text" autocomplete="username" placeholder="" data-i18n-placeholder="namePlaceholder" required />
+                </div>
+                <div class="input-group">
+                  <label for="login-password" data-i18n="passwordLabel">Пароль</label>
+                  <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="" data-i18n-placeholder="passwordPlaceholder" required />
+                </div>
+                <div class="button-row"><button type="submit" class="primary-btn"><span data-i18n="loginButton">Увійти</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 10h12m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg></button></div>
+              </form>
+              <div id="auth-message" class="status-message" aria-live="polite"></div>
+              <p class="auth-footnote"><span class="footnote-check">✓</span><span data-i18n="authFootnote">Твої дані залишаються тільки у твоєму профілі</span></p>
+            </div>
+          </section>
+        </section>
+
+        <section id="dashboard" class="dashboard hidden">
+          <header class="dashboard-head">
+            <div class="dashboard-welcome"><h2 id="welcome-name">User</h2></div>
+          </header>
+
+          <section id="profile-page" class="dashboard-page" data-page="profile" aria-labelledby="profile-page-title">
+            <div class="page-split profile-split">
+              <aside class="page-visual profile-visual">
+                <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1600&q=88" alt="Свіжі овочі для збалансованого харчування" />
+                <div class="page-visual-shade"></div>
+                <div class="visual-badge"><span class="live-dot"></span><span data-i18n="profileVisualBadge">Твій особистий баланс</span></div>
+                <div class="visual-copy"><p class="eyebrow" data-i18n="profilePageEyebrow">Турбота починається з тебе</p><h1 id="profile-page-title" data-i18n="profilePageTitle">Профіль, що росте разом з тобою.</h1><p data-i18n="profilePageDescription">Твої дані допомагають налаштувати комфортну денну ціль і бачити власний ритм.</p></div>
+                <a class="visual-credit" href="https://unsplash.com/" target="_blank" rel="noreferrer">Photo: Unsplash</a>
+              </aside>
+              <div class="page-content profile-content">
+                <div class="page-intro"><p class="eyebrow" data-i18n="profileDetailsTitle">Твій профіль</p><h2 data-i18n="profileSettingsSubtitle">Особисті дані</h2><p data-i18n="profilePageIntro">Оновлюй параметри, щоб денна ціль відповідала тобі.</p></div>
+                <section class="profile-card dashboard-card" aria-label="Дані профілю">
+                  <div class="profile-card-heading"><div class="profile-avatar" aria-hidden="true">✳</div><div><span class="eyebrow" data-i18n="profileCardLabel">Особистий профіль</span><div class="profile-name-row"><h3 id="profile-name">User</h3><button class="icon-button" type="button" data-edit-field="name" data-profile-label="editProfileName" aria-label="Змінити імʼя" title="Змінити імʼя"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m12.8 4.2 3 3M4 16l3.4-.7 8.8-8.8a1.6 1.6 0 0 0-2.3-2.3l-8.8 8.8L4 16Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div></div>
+                  <div class="profile-facts">
+                    <div class="profile-fact"><span data-i18n="ageLabel">Вік</span><div><strong id="profile-age">—</strong><button class="icon-button" type="button" data-edit-field="age" data-profile-label="editProfileAge" aria-label="Змінити вік" title="Змінити вік"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m12.8 4.2 3 3M4 16l3.4-.7 8.8-8.8a1.6 1.6 0 0 0-2.3-2.3l-8.8 8.8L4 16Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+                    <div class="profile-fact"><span data-i18n="heightLabel">Зріст, см</span><div><strong id="profile-height">—</strong><button class="icon-button" type="button" data-edit-field="height" data-profile-label="editProfileHeight" aria-label="Змінити зріст" title="Змінити зріст"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m12.8 4.2 3 3M4 16l3.4-.7 8.8-8.8a1.6 1.6 0 0 0-2.3-2.3l-8.8 8.8L4 16Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+                    <div class="profile-fact"><span data-i18n="weightLabel">Вага, кг</span><div><strong id="profile-weight">—</strong><button class="icon-button" type="button" data-edit-field="weight" data-profile-label="editProfileWeight" aria-label="Змінити вагу" title="Змінити вагу"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m12.8 4.2 3 3M4 16l3.4-.7 8.8-8.8a1.6 1.6 0 0 0-2.3-2.3l-8.8 8.8L4 16Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+                  </div>
+                </section>
+                <section class="target-card" aria-labelledby="target-card-title"><div><p class="eyebrow" data-i18n="dailyTargetLabel">Денна ціль</p><h3 id="target-card-title"><strong id="profile-calorie-target">0</strong> <span data-i18n="kcalUnit">ккал</span></h3><p data-i18n="profileTargetNote">Орієнтир на день, розрахований для твого профілю.</p></div><div class="target-spark" aria-hidden="true">✳</div></section>
+                <div class="profile-bottom-note"><span class="note-check">✓</span><p data-i18n="profilePrivacyNote">Можеш змінити ці дані будь-коли — денна ціль оновиться автоматично.</p></div>
+              </div>
+            </div>
+          </section>
+
+          <section id="records-page" class="dashboard-page hidden" data-page="records" aria-labelledby="records-page-title">
+            <div class="page-split records-split">
+              <aside class="page-visual records-visual">
+                <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1600&q=88" alt="Яскравий стіл зі свіжою їжею" />
+                <div class="page-visual-shade"></div>
+                <div class="visual-badge"><span class="live-dot"></span><span data-i18n="recordsVisualBadge">Щоденник турботи про себе</span></div>
+                <div class="visual-copy"><p class="eyebrow" data-i18n="recordsPageEyebrow">Послідовність важливіша за досконалість</p><h1 id="records-page-title" data-i18n="recordsPageTitle">Помічай свій прогрес день за днем.</h1><p data-i18n="recordsPageDescription">Переглядай страви, баланс та історію харчування в одному зручному місці.</p></div>
+                <a class="visual-credit" href="https://unsplash.com/" target="_blank" rel="noreferrer">Photo: Unsplash</a>
+              </aside>
+              <div class="page-content records-content">
+                <div class="section-heading-row records-heading"><div><p class="eyebrow" data-i18n="mealHistoryTitle">Страви за день</p><h2 data-i18n="recordsHeading">Твій харчовий щоденник</h2></div><label class="day-picker"><span data-i18n="chooseDay">Обрати день</span><input id="selected-day" type="date" /></label></div>
+                <section class="daily-overview dashboard-card" aria-labelledby="calorie-progress-title">
+                  <div class="section-heading-row overview-top"><div><p id="calorie-progress-title" class="eyebrow" data-i18n="calorieProgressTitle">Калорійний баланс</p><h3 id="selected-day-title">Сьогодні</h3></div><div class="calorie-numbers"><div><strong id="calories-eaten">0</strong><span data-i18n="caloriesEatenLabel">Зʼїдено</span></div><div class="calorie-divider">/</div><div><strong id="calories-target-label">0</strong><span data-i18n="dailyTargetLabel">Денна ціль</span></div><small data-i18n="kcalUnit">ккал</small></div></div>
+                  <div class="progress-track"><div id="calorie-progress" class="progress-fill" role="progressbar" aria-label="Калорійний прогрес" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div><p id="calorie-progress-label" class="progress-caption">0% від цілі · ще 0 ккал</p>
+                  <div class="insight-card"><div class="insight-card-heading"><div><span class="insight-spark" aria-hidden="true">✳</span><strong data-i18n="insightTitle">Підказка на день</strong></div><button id="insight-button" class="text-button" type="button" data-i18n="insightButton">Порада від Gemini</button></div><p id="daily-insight" data-i18n="insightPlaceholder">Отримай ідею на основі страв і балансу за день.</p></div>
+                </section>
+                <div class="macro-stats records-macros"><article class="macro-card"><span class="stat-label" data-i18n="proteinLabel">Білки</span><strong id="protein-eaten">0 g</strong><small><span data-i18n="targetShort">ціль</span> <span id="protein-target">0 g</span></small></article><article class="macro-card"><span class="stat-label" data-i18n="carbsLabel">Вуглеводи</span><strong id="carbs-eaten">0 g</strong><small><span data-i18n="targetShort">ціль</span> <span id="carbs-target">0 g</span></small></article><article class="macro-card"><span class="stat-label" data-i18n="fatLabel">Жири</span><strong id="fat-eaten">0 g</strong><small><span data-i18n="targetShort">ціль</span> <span id="fat-target">0 g</span></small></article></div>
+                <section class="meal-history-card dashboard-card" aria-labelledby="meal-history-title"><div class="section-heading-row meal-history-heading"><div><p class="eyebrow" data-i18n="mealHistoryTitle">Страви за день</p><h3 id="meal-history-title" data-i18n="mealHistorySubtitle">Твої записи</h3></div><span id="meal-count-badge" class="count-badge">0</span></div><ul id="meal-list" class="meal-list"><li class="empty-state" data-i18n="noMeals">Поки немає записів за цей день.</li></ul></section>
+                <section class="history-card dashboard-card" aria-labelledby="history-title"><div class="card-section-heading"><div class="card-icon" aria-hidden="true">↗</div><div><p class="eyebrow" data-i18n="historyTitle">Попередні дні</p><h3 id="history-title" data-i18n="historySubtitle">Твій прогрес</h3></div></div><div id="history-list" class="history-list"><p class="history-empty" data-i18n="noHistory">Історія зʼявиться після першого збереженого прийому їжі.</p></div></section>
+              </div>
+            </div>
+          </section>
+
+          <section id="add-page" class="dashboard-page hidden" data-page="add" aria-labelledby="add-page-title">
+            <div class="page-split add-split">
+              <aside class="page-visual add-visual">
+                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1600&q=88" alt="Салат зі свіжих овочів, авокадо та зелені" />
+                <div class="page-visual-shade"></div>
+                <div class="visual-badge"><span class="live-dot"></span><span data-i18n="addVisualBadge">Смачні звички без зайвого клопоту</span></div>
+                <div class="visual-copy"><p class="eyebrow" data-i18n="addMealEyebrow">Твій щоденник</p><h1 id="add-page-title" data-i18n="addPageTitle">Кожна тарілка — частина твоєї історії.</h1><p data-i18n="addPageDescription">Опиши страву або додай фото — калорії та БЖВ зʼявляться у твоєму щоденнику.</p></div>
+                <a class="visual-credit" href="https://unsplash.com/photos/bowl-of-vegetable-salads-IGfIGP5ONV0" target="_blank" rel="noreferrer">Photo: Anna Pelzer / Unsplash</a>
+              </aside>
+              <div class="page-content add-content">
+                <div class="page-intro"><p class="eyebrow" data-i18n="addMealEyebrow">Твій щоденник</p><h2 data-i18n="addMealTitle">Додати прийом їжі</h2><p data-i18n="addMealDescription">Обери зручний спосіб, а ми додамо його до записів за день.</p></div>
+                <div class="entry-methods">
+                  <article class="analysis-card add-meal-card"><div class="entry-icon" aria-hidden="true">✎</div><p class="eyebrow" data-i18n="textEntryTitle">За описом</p><h3 data-i18n="textEntryHeading">Розкажи, що було на тарілці</h3><textarea id="meal-text" rows="5" data-i18n-placeholder="mealTextPlaceholder"></textarea><button id="analyze-text-btn" class="primary-btn" type="button"><span data-i18n="analyzeTextButton">Проаналізувати та додати</span><span aria-hidden="true">↗</span></button><div id="analysis-text-result" class="result-box" aria-live="polite"></div></article>
+                  <article class="analysis-card add-meal-card photo-entry-card"><div class="entry-icon" aria-hidden="true">◉</div><p class="eyebrow" data-i18n="photoEntryTitle">За фото</p><h3 data-i18n="photoEntryHeading">Завантаж фото страви</h3><div class="upload-row"><label class="upload-picker" for="image-file"><span class="upload-symbol">＋</span><span data-i18n="uploadPhotoLabel">Обрати фото</span><input id="image-file" type="file" accept="image/*" /></label><input id="dish-name" type="text" data-i18n-placeholder="dishNamePlaceholder" placeholder="" /><input id="portion-grams" type="number" min="1" step="1" data-i18n-placeholder="portionPlaceholder" placeholder="" /></div><button id="analyze-image-btn" class="primary-btn" type="button"><span data-i18n="analyzeImageButton">Розрахувати та додати</span><span aria-hidden="true">↗</span></button><div id="analysis-image-result" class="result-box" aria-live="polite"></div></article>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="recipe-page" class="dashboard-page hidden" data-page="recipe" aria-labelledby="recipe-page-title">
+            <div class="page-split recipe-split">
+              <aside class="page-visual recipe-visual">
+                <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=1600&q=88" alt="Страва з пастою та свіжими інгредієнтами" />
+                <div class="page-visual-shade"></div>
+                <div class="visual-badge"><span class="live-dot"></span><span data-i18n="recipeVisualBadge">Ідея, яку можна приготувати</span></div>
+                <div class="visual-copy"><p class="eyebrow" data-i18n="recipeEyebrow">Твоя кухня, твій вибір</p><h1 id="recipe-page-title" data-i18n="recipePageTitle">Перетвори ідею на власний рецепт.</h1><p data-i18n="recipePageDescription">Задай назву й бажану вагу — отримаєш список продуктів, послідовність приготування та орієнтовну поживну цінність.</p></div>
+                <a class="visual-credit" href="https://unsplash.com/" target="_blank" rel="noreferrer">Photo: Unsplash</a>
+              </aside>
+              <div class="page-content recipe-content">
+                <div class="page-intro"><p class="eyebrow" data-i18n="recipeEyebrow">Твоя кухня, твій вибір</p><h2 data-i18n="recipeIntroTitle">З чого приготуємо сьогодні?</h2><p data-i18n="recipeIntroText">Введи назву страви та розмір готової порції. Рецепт можна відредагувати перед збереженням.</p></div>
+                <section class="recipe-generator dashboard-card" aria-label="Генератор рецепту">
+                  <label class="recipe-field"><span data-i18n="recipeNameLabel">Назва страви</span><input id="recipe-request-title" type="text" maxlength="120" data-i18n-placeholder="recipeNamePlaceholder" placeholder="" /></label>
+                  <div class="recipe-input-grid"><label class="recipe-field"><span data-i18n="recipeWeightLabel">Вага готової страви, г</span><input id="recipe-request-weight" type="number" min="50" max="5000" value="500" /></label><label class="recipe-field"><span data-i18n="recipeServingsLabel">Кількість порцій</span><input id="recipe-request-servings" type="number" min="1" max="20" value="2" /></label></div>
+                  <label class="recipe-field"><span data-i18n="recipePreferencesLabel">Побажання до складу</span><input id="recipe-request-preferences" type="text" maxlength="500" data-i18n-placeholder="recipePreferencesPlaceholder" placeholder="" /></label>
+                  <button id="recipe-generate-button" class="primary-btn" type="button"><span data-i18n="recipeGenerateButton">Згенерувати рецепт</span><span aria-hidden="true">✳</span></button>
+                  <p id="recipe-generation-status" class="recipe-status" aria-live="polite"></p>
+                </section>
+
+                <section id="recipe-editor" class="recipe-editor dashboard-card hidden" aria-label="Редагування рецепту">
+                  <div class="recipe-editor-heading"><div><p class="eyebrow" data-i18n="recipeEditorEyebrow">Твій рецепт</p><h3 data-i18n="recipeEditorTitle">Перевір і відредагуй</h3></div><button id="recipe-add-ingredient" class="text-button" type="button" data-i18n="recipeAddIngredient">+ Інгредієнт</button></div>
+                  <label class="recipe-field"><span data-i18n="recipeNameLabel">Назва страви</span><input id="recipe-title" type="text" maxlength="160" /></label>
+                  <label class="recipe-field"><span data-i18n="recipeDescriptionLabel">Короткий опис</span><textarea id="recipe-description" rows="2" maxlength="2000"></textarea></label>
+                  <div class="recipe-input-grid"><label class="recipe-field"><span data-i18n="recipeWeightLabel">Вага готової страви, г</span><input id="recipe-weight" type="number" min="1" max="10000" /></label><label class="recipe-field"><span data-i18n="recipeServingsLabel">Кількість порцій</span><input id="recipe-servings" type="number" min="1" max="50" /></label></div>
+                  <div class="recipe-subheading"><h4 data-i18n="recipeIngredientsTitle">Інгредієнти</h4><span data-i18n="recipeGramsUnit">грами</span></div>
+                  <div id="recipe-ingredients" class="recipe-edit-list"></div>
+                  <div class="recipe-subheading recipe-instructions-heading"><h4 data-i18n="recipeInstructionsTitle">Приготування</h4><button id="recipe-add-step" class="text-button" type="button" data-i18n="recipeAddStep">+ Крок</button></div>
+                  <ol id="recipe-instructions" class="recipe-steps-list"></ol>
+                  <div class="recipe-subheading"><h4 data-i18n="recipeNutritionTitle">Поживна цінність на весь рецепт</h4></div>
+                  <div class="recipe-nutrition-grid"><label class="recipe-field"><span data-i18n="caloriesLabel">Калорії</span><input id="recipe-calories" type="number" min="0" max="50000" /></label><label class="recipe-field"><span data-i18n="proteinLabel">Білки, г</span><input id="recipe-protein" type="number" min="0" max="5000" /></label><label class="recipe-field"><span data-i18n="carbsLabel">Вуглеводи, г</span><input id="recipe-carbs" type="number" min="0" max="10000" /></label><label class="recipe-field"><span data-i18n="fatLabel">Жири, г</span><input id="recipe-fat" type="number" min="0" max="5000" /></label></div>
+                  <div class="recipe-editor-actions"><button id="recipe-save-button" class="primary-btn" type="button" data-i18n="recipeSaveButton">Зберегти рецепт</button><button id="recipe-new-button" class="secondary-btn" type="button" data-i18n="recipeNewButton">Новий рецепт</button></div>
+                  <p id="recipe-save-status" class="recipe-status" aria-live="polite"></p>
+                </section>
+
+                <section class="saved-recipes-card dashboard-card"><div class="recipe-editor-heading"><div><p class="eyebrow" data-i18n="savedRecipesEyebrow">Твоя колекція</p><h3 data-i18n="savedRecipesTitle">Збережені рецепти</h3></div></div><div id="saved-recipe-list" class="saved-recipe-list"><p class="recipe-empty" data-i18n="savedRecipesEmpty">Тут зʼявляться рецепти, які ти збережеш.</p></div></section>
+              </div>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <section class="site-information" aria-label="Інформація про NutriDay">
+        <section id="about" class="info-section about-section">
+          <div class="info-section-heading"><p class="eyebrow" data-i18n="aboutEyebrow">Про NutriDay</p><h2 data-i18n="aboutTitle">Баланс, який вписується у твоє життя.</h2><p data-i18n="aboutDescription">NutriDay допомагає краще розуміти своє харчування — спокійно, без суворих правил та зайвого тиску.</p><p class="about-details" data-i18n="aboutDetail">Це особистий простір, де щоденні записи складаються у зрозумілу картину: що ти їси, як змінюється баланс і які маленькі кроки хочеться спробувати далі.</p></div>
+          <div class="about-pillars">
+            <article><span class="pillar-mark">01</span><h3 data-i18n="aboutPillarOneTitle">Уважність замість обмежень</h3><p data-i18n="aboutPillarOneText">Записуй страви й дивись на свій раціон цілісно, без оцінок і докорів.</p></article>
+            <article><span class="pillar-mark">02</span><h3 data-i18n="aboutPillarTwoTitle">Твої дані — твій орієнтир</h3><p data-i18n="aboutPillarTwoText">Особисті цілі та історія допомагають помічати зміни у власному темпі.</p></article>
+            <article><span class="pillar-mark">03</span><h3 data-i18n="aboutPillarThreeTitle">Прості щоденні кроки</h3><p data-i18n="aboutPillarThreeText">Текстовий опис або фото — обирай спосіб, який зручний саме сьогодні.</p></article>
+          </div>
+        </section>
+
+        <section id="how-it-works" class="info-section flow-section">
+          <div class="info-section-heading"><p class="eyebrow" data-i18n="howEyebrow">Як це працює</p><h2 data-i18n="howTitle">Три прості кроки до яснішої картини.</h2><p data-i18n="howDescription">Не потрібно змінювати все одразу. Почни з того, що вже робиш щодня.</p></div>
+          <div class="flow-grid">
+            <article class="flow-card"><span class="flow-number">01</span><div><h3 data-i18n="howStepOneTitle">Налаштуй профіль</h3><p data-i18n="howStepOneText">Вкажи вік, зріст і вагу, щоб отримати орієнтовну денну ціль. Якщо дані зміняться, їх можна оновити в будь-який момент.</p></div><span class="flow-arrow" aria-hidden="true">↘</span></article>
+            <article class="flow-card"><span class="flow-number">02</span><div><h3 data-i18n="howStepTwoTitle">Записуй прийоми їжі</h3><p data-i18n="howStepTwoText">Додай страву текстом або фото. Уточни назву й розмір порції, щоб запис був кориснішим для тебе.</p></div><span class="flow-arrow" aria-hidden="true">↘</span></article>
+            <article class="flow-card"><span class="flow-number">03</span><div><h3 data-i18n="howStepThreeTitle">Переглядай свій день</h3><p data-i18n="howStepThreeText">Стеж за калоріями та БЖВ, повертайся до попередніх днів і за потреби виправляй або видаляй записи.</p></div><span class="flow-arrow" aria-hidden="true">✓</span></article>
+          </div>
+          <p class="flow-footnote"><span aria-hidden="true">✳</span><span data-i18n="estimateNotice">Розрахунки є орієнтовними й призначені для загального ознайомлення, а не для медичної діагностики чи лікування.</span></p>
+        </section>
+
+        <section id="help" class="info-section help-section">
+          <div class="info-section-heading"><p class="eyebrow" data-i18n="helpEyebrow">Ми поруч</p><h2 data-i18n="helpTitle">Підказки для щоденного користування.</h2><p data-i18n="helpDescription">Коротко про найважливіше. Якщо не знайшов відповідь — напиши нам у контакти нижче.</p></div>
+          <div class="help-list">
+            <details><summary data-i18n="helpQuestionOne">Як додати страву?</summary><p data-i18n="helpAnswerOne">Відкрий сторінку «Додати страву», опиши їжу або завантаж фото, вкажи порцію — запис зʼявиться у твоєму щоденнику.</p></details>
+            <details><summary data-i18n="helpQuestionTwo">Наскільки точний аналіз калорій?</summary><p data-i18n="helpAnswerTwo">Калорійність і БЖВ є приблизною оцінкою. Для точного підрахунку звіряйся з етикетками та зважуй інгредієнти.</p></details>
+            <details><summary data-i18n="helpQuestionThree">Як змінити денну ціль?</summary><p data-i18n="helpAnswerThree">Зміни вік, зріст або вагу у профілі — денна ціль та макронутрієнти перерахуються автоматично.</p></details>
+            <details><summary data-i18n="helpQuestionFour">Чи можна змінити або видалити запис?</summary><p data-i18n="helpAnswerFour">Так. На сторінці «Мої записи» вибери потрібний день, а потім скористайся кнопками редагування чи видалення біля страви.</p></details>
+            <details><summary data-i18n="helpQuestionFive">Чи зберігається історія за минулі дні?</summary><p data-i18n="helpAnswerFive">Так, записи зберігаються в історії. Вибери дату в щоденнику або натисни на потрібний день у списку попередніх записів.</p></details>
+            <details><summary data-i18n="helpQuestionSix">Яке фото найкраще підходить для аналізу?</summary><p data-i18n="helpAnswerSix">Обирай чітке фото страви при доброму освітленні. Якщо можливо, вкажи назву та приблизну вагу порції — це допоможе зробити оцінку точнішою.</p></details>
+          </div>
+        </section>
+
+        <section id="contacts" class="info-section contacts-section">
+          <div class="contacts-copy"><p class="eyebrow" data-i18n="contactsEyebrow">Звʼяжімося</p><h2 data-i18n="contactsTitle">Маєш питання чи ідею?</h2><p data-i18n="contactsDescription">Напиши менеджеру в Telegram або Instagram чи стеж за Instagram-каналом.</p></div>
+          <div class="contact-grid">
+            <article class="contact-card"><span class="contact-icon" aria-hidden="true">✈</span><div><p class="eyebrow" data-i18n="telegramManager">Telegram менеджера</p><a class="contact-account" href="https://t.me/nutriday" target="_blank" rel="noopener noreferrer">@nutriday</a></div></article>
+            <article class="contact-card"><span class="contact-icon" aria-hidden="true">◎</span><div><p class="eyebrow" data-i18n="instagramManager">Instagram менеджера</p><a class="contact-account" href="https://www.instagram.com/nutriday/" target="_blank" rel="noopener noreferrer">@nutriday</a></div></article>
+            <article class="contact-card"><span class="contact-icon" aria-hidden="true">◉</span><div><p class="eyebrow" data-i18n="instagramChannel">Instagram канал</p><a class="contact-account" href="https://www.instagram.com/nutriday_channel/" target="_blank" rel="noopener noreferrer">@nutriday_channel</a></div></article>
+          </div>
+        </section>
+      </section>
+
+
+      <dialog id="profile-edit-dialog" class="edit-dialog">
+        <form id="profile-edit-form" class="dialog-card">
+          <button class="dialog-close" type="button" aria-label="Close" onclick="this.closest('dialog').close()">×</button>
+          <p class="eyebrow" data-i18n="editProfileTitle">Редагувати профіль</p>
+          <label id="profile-edit-label" for="profile-edit-value"></label>
+          <input id="profile-edit-value" type="text" required />
+          <p id="profile-edit-error" class="dialog-error" aria-live="polite"></p>
+          <div class="dialog-actions"><button class="secondary-btn" type="button" onclick="this.closest('dialog').close()" data-i18n="cancel">Скасувати</button><button id="profile-edit-save" class="primary-btn" type="submit" data-i18n="save">Зберегти</button></div>
+        </form>
+      </dialog>
+      <dialog id="meal-edit-dialog" class="edit-dialog">
+        <form id="meal-edit-form" class="dialog-card meal-edit-card">
+          <button class="dialog-close" type="button" aria-label="Close" onclick="this.closest('dialog').close()">×</button>
+          <p class="eyebrow" data-i18n="editMealTitle">Редагувати страву</p>
+          <label for="meal-edit-name" data-i18n="mealNameLabel">Назва страви</label><input id="meal-edit-name" type="text" maxlength="160" required />
+          <label for="meal-edit-description" data-i18n="mealDescriptionLabel">Опис</label><textarea id="meal-edit-description" rows="3"></textarea>
+          <div class="meal-edit-macros"><label><span data-i18n="caloriesLabel">Калорії</span><input id="meal-edit-calories" type="number" min="0" max="20000" step="1" required /></label><label><span data-i18n="proteinLabel">Білки</span><input id="meal-edit-protein" type="number" min="0" max="2000" step="0.1" required /></label><label><span data-i18n="carbsLabel">Вуглеводи</span><input id="meal-edit-carbs" type="number" min="0" max="2000" step="0.1" required /></label><label><span data-i18n="fatLabel">Жири</span><input id="meal-edit-fat" type="number" min="0" max="2000" step="0.1" required /></label></div>
+          <p id="meal-edit-error" class="dialog-error" aria-live="polite"></p>
+          <div class="dialog-actions"><button class="secondary-btn" type="button" onclick="this.closest('dialog').close()" data-i18n="cancel">Скасувати</button><button id="meal-edit-save" class="primary-btn" type="submit" data-i18n="save">Зберегти</button></div>
+        </form>
+      </dialog>
+
+      <footer class="site-footer">
+        <div class="footer-brand"><a class="brand-wrap" href="/" aria-label="NutriDay — головна"><span class="brand-mark" aria-hidden="true">✳</span><span class="brand-copy"><strong>NutriDay</strong><small data-i18n="brandTagline">баланс на щодень</small></span></a><p data-i18n="footerRights">Простір для збалансованих звичок</p></div>
+        <nav class="footer-links" aria-label="Навігація внизу сторінки"><a href="#about" data-i18n="siteAbout">Про нас</a><a href="#how-it-works" data-i18n="siteHow">Як це працює</a><a href="#help" data-i18n="siteHelp">Допомога</a><a href="#contacts" data-i18n="siteContacts">Контакти</a></nav>
+        <div class="footer-note"><span class="footer-heart" aria-hidden="true">♥</span><span data-i18n="footerNote">Створено з турботою про тебе</span></div>
+        <small class="footer-copyright">© <span id="current-year"></span> NutriDay</small>
+      </footer>
+    </div>
+  </body>
+</html>

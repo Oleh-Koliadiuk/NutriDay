@@ -30,6 +30,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: clip;
   background: var(--canvas);
   color: var(--ink);
 }
@@ -51,7 +52,7 @@ a {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
 }
 .site-header {
   min-height: 86px;
@@ -61,8 +62,11 @@ a {
   justify-content: space-between;
   gap: 24px;
   background: rgba(248, 248, 244, 0.94);
-  position: relative;
-  z-index: 3;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  flex: 0 0 auto;
+  backdrop-filter: blur(16px);
 }
 .brand-wrap {
   display: inline-flex;

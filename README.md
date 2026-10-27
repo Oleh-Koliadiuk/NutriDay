@@ -5,6 +5,7 @@ NutriDay is a calorie and nutrition tracking web app. It combines a responsive H
 ## Features
 
 - Account registration, sign-in, and a guest-style account with optional profile details.
+- Email-based password recovery, limited to one successful reset every 7 days.
 - Editable profile name, age, height, and weight.
 - Daily calorie and macronutrient targets. Targets are recalculated when profile measurements change.
 - Meal logging from a text description or a food photo with a dish name and serving weight.
@@ -12,6 +13,7 @@ NutriDay is a calorie and nutrition tracking web app. It combines a responsive H
 - Daily nutrition suggestions based on the selected day's meals.
 - Recipe generation from a dish name, target cooked weight, servings, and dietary preferences.
 - An editable recipe form, including ingredients, quantities, instructions, and estimated nutrition; saved recipes can be updated or deleted.
+- Separate account settings for the recovery email and interface language.
 - English, Ukrainian, and Russian interface translations. Recipe generation follows the selected language.
 - Responsive pages for the profile, meal records, meal entry, and recipes, plus informational pages for About, Help, and Contacts.
 
@@ -21,18 +23,18 @@ Nutrition estimates are approximate and intended for general information, not me
 
 ### Sign in and create an account
 
-| Sign in | Create account |
-| --- | --- |
+| Sign in                                                   | Create account                                                                |
+| --------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | ![NutriDay login page](assets/screenshots/login-page.png) | ![NutriDay account creation page](assets/screenshots/create-account-page.png) |
 
 ### Main app pages
 
-| Profile | Meal entries |
-| --- | --- |
+| Profile                                                       | Meal entries                                                       |
+| ------------------------------------------------------------- | ------------------------------------------------------------------ |
 | ![NutriDay profile page](assets/screenshots/profile-page.png) | ![NutriDay meal entries page](assets/screenshots/entries-apge.png) |
 
-| Add a meal | Recipes |
-| --- | --- |
+| Add a meal                                                          | Recipes                                                       |
+| ------------------------------------------------------------------- | ------------------------------------------------------------- |
 | ![NutriDay add a meal page](assets/screenshots/add-a-meal-page.png) | ![NutriDay recipes page](assets/screenshots/recipes-page.png) |
 
 ## AI integration
@@ -76,8 +78,16 @@ Create backend/.env:
     PROJECT_NAME=NutriDay
     DATABASE_URL=sqlite:///./data/calorie_tracker.db
     GEMINI_API_KEY=your_gemini_api_key
+    SMTP_HOST=smtp.example.com
+    SMTP_PORT=587
+    SMTP_USERNAME=your_smtp_username
+    SMTP_PASSWORD=your_smtp_password
+    SMTP_FROM_EMAIL=noreply@example.com
+    SMTP_USE_TLS=true
+    SMTP_USE_SSL=false
 
 GEMINI_API_KEY is optional. Keep the real key private and do not commit .env files.
+SMTP settings are required for password recovery. For implicit TLS (commonly port 465), set SMTP_USE_SSL=true and SMTP_USE_TLS=false. Existing accounts can add a recovery email from their profile after signing in.
 
 ## Start the app
 
@@ -99,28 +109,30 @@ The frontend can also be opened with a static development server on port 5500; i
 
 ## API overview
 
-Private routes require Authorization: Bearer <token>. Registration, login, skip signup, and the health check do not require an existing token.
+Private routes require Authorization: Bearer <token>. Registration, login, skip signup, password recovery, and the health check do not require an existing token.
 
-| Method | Route | Purpose |
-| --- | --- | --- |
-| POST | /api/auth/register | Create an account |
-| POST | /api/auth/login | Sign in and issue a token |
-| POST | /api/auth/skip | Create an account with optional profile details skipped |
-| GET | /api/auth/me | Get the current user's profile |
-| PATCH | /api/auth/me | Update profile details and recalculate targets |
-| GET | /api/nutrition/profile | Get daily nutrition targets |
-| GET | /api/nutrition/day?day=YYYY-MM-DD | Get a day's summary and meal entries |
-| GET | /api/nutrition/history | List days with recorded meals |
-| POST | /api/nutrition/analyze-text | Analyze and save a meal from text |
-| POST | /api/nutrition/analyze-image | Analyze and save a meal from an uploaded image |
-| PATCH | /api/nutrition/meals/{meal_id} | Edit a meal entry |
-| DELETE | /api/nutrition/meals/{meal_id} | Delete a meal entry |
-| POST | /api/nutrition/insight?day=YYYY-MM-DD | Generate a daily nutrition suggestion |
-| POST | /api/recipes/generate | Generate a recipe with Gemini |
-| GET | /api/recipes | List saved recipes |
-| POST | /api/recipes | Save a recipe |
-| PATCH | /api/recipes/{recipe_id} | Update a saved recipe |
-| DELETE | /api/recipes/{recipe_id} | Delete a saved recipe |
+| Method | Route                                 | Purpose                                                     |
+| ------ | ------------------------------------- | ----------------------------------------------------------- |
+| POST   | /api/auth/register                    | Create an account                                           |
+| POST   | /api/auth/login                       | Sign in and issue a token                                   |
+| POST   | /api/auth/skip                        | Create an account with optional profile details skipped     |
+| GET    | /api/auth/me                          | Get the current user's profile                              |
+| PATCH  | /api/auth/me                          | Update profile details and recalculate targets              |
+| POST   | /api/auth/forgot-password             | Send a one-time password reset code by email                |
+| POST   | /api/auth/reset-password              | Set a new password using the email code (once every 7 days) |
+| GET    | /api/nutrition/profile                | Get daily nutrition targets                                 |
+| GET    | /api/nutrition/day?day=YYYY-MM-DD     | Get a day's summary and meal entries                        |
+| GET    | /api/nutrition/history                | List days with recorded meals                               |
+| POST   | /api/nutrition/analyze-text           | Analyze and save a meal from text                           |
+| POST   | /api/nutrition/analyze-image          | Analyze and save a meal from an uploaded image              |
+| PATCH  | /api/nutrition/meals/{meal_id}        | Edit a meal entry                                           |
+| DELETE | /api/nutrition/meals/{meal_id}        | Delete a meal entry                                         |
+| POST   | /api/nutrition/insight?day=YYYY-MM-DD | Generate a daily nutrition suggestion                       |
+| POST   | /api/recipes/generate                 | Generate a recipe with Gemini                               |
+| GET    | /api/recipes                          | List saved recipes                                          |
+| POST   | /api/recipes                          | Save a recipe                                               |
+| PATCH  | /api/recipes/{recipe_id}              | Update a saved recipe                                       |
+| DELETE | /api/recipes/{recipe_id}              | Delete a saved recipe                                       |
 
 ## Project structure
 
@@ -149,10 +161,10 @@ Private routes require Authorization: Bearer <token>. Registration, login, skip 
         │   ├── main.py              # FastAPI application and static file routes
         │   ├── api/                 # Authentication, nutrition, and recipe routes
         │   ├── core/                # Settings, security, and auth dependencies
-        │   ├── database/            # SQLAlchemy base and database sessions
-        │   ├── models/              # User, daily log, meal, and recipe tables
+        │   ├── database/            # SQLAlchemy setup, sessions, and schema migration
+        │   ├── models/              # User, daily log, meal, recipe, and reset-code tables
         │   ├── schemas/             # Pydantic request and response models
-        │   └── services/            # Gemini integration, nutrition, and targets
+        │   └── services/            # Gemini, email, nutrition, and target services
         ├── data/                    # Local SQLite database (ignored by Git)
         ├── .env                     # Local secrets and configuration (not committed)
         └── requirements.txt         # Python dependencies

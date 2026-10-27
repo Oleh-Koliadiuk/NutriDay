@@ -30,9 +30,11 @@ async function apiRequest(path, options = {}) {
           .filter(Boolean)
           .join("; ")
       : payload.detail;
-    throw new Error(
+    const error = new Error(
       detail || payload.message || `Request failed (${response.status})`,
     );
+    error.status = response.status;
+    throw error;
   }
   return payload;
 }
@@ -61,6 +63,18 @@ export const updateProfile = (data) =>
   apiRequest("/auth/me", {
     method: "PATCH",
     body: JSON.stringify(data),
+  });
+
+export const forgotPassword = (email) =>
+  apiRequest("/auth/forgot-password", {
+    method: "POST",
+    body: JSON.stringify({ email }),
+  });
+
+export const resetPassword = (email, code, newPassword) =>
+  apiRequest("/auth/reset-password", {
+    method: "POST",
+    body: JSON.stringify({ email, code, new_password: newPassword }),
   });
 
 export const getDay = (day) =>

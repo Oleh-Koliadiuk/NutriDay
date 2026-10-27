@@ -2,7 +2,7 @@ import secrets
 
 import bcrypt
 from argon2 import PasswordHasher
-from argon2.exceptions import VerifyMismatchError
+from argon2.exceptions import InvalidHashError, VerifyMismatchError
 
 password_hasher = PasswordHasher()
 
@@ -17,7 +17,7 @@ def verify_password(password: str, password_hash: str) -> bool:
 
     try:
         return password_hasher.verify(password_hash, password)
-    except VerifyMismatchError:
+    except (InvalidHashError, VerifyMismatchError):
         try:
             if password_hash.startswith("$2"):
                 return bcrypt.checkpw(password.encode("utf-8"), password_hash.encode("utf-8"))

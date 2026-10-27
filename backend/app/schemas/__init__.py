@@ -1,4 +1,4 @@
-from .auth import TokenOut, UserCreate, UserLogin, UserOut, UserSkip
+from .auth import ForgotPasswordRequest, ResetPasswordRequest, TokenOut, UserCreate, UserLogin, UserOut, UserSkip
 from .nutrition import DaySummaryOut, HistoryDayOut, MealAnalysisRequest, MealEntryOut, MealEntryUpdate
 from .profile import UserUpdate
 from .recipe import RecipeGenerateRequest, RecipeOut, RecipeWrite
@@ -10,6 +10,8 @@ __all__ = [
     "DaySummaryOut",
     "HistoryDayOut",
     "TokenOut",
+    "ForgotPasswordRequest",
+    "ResetPasswordRequest",
     "UserCreate",
     "UserLogin",
     "UserOut",

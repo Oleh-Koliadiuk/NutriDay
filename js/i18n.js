@@ -1,6 +1,5 @@
 export const translations = {
   uk: {
-    brandTagline: "баланс на щодень",
     headerNote: "Турбота про себе починається з малого",
     siteAbout: "Про нас",
     siteHow: "Як це працює",
@@ -79,8 +78,6 @@ export const translations = {
       "Створи профіль, щоб отримати персональну денну норму та відстежувати харчування.",
     optionalDetails: "Для точнішої денної норми · необовʼязково",
     authFootnote: "Твої дані залишаються тільки у твоєму профілі",
-    footerRights: "Простір для збалансованих звичок",
-    footerNote: "Створено з турботою про тебе",
     profileDetailsTitle: "Твій профіль",
     profileSettingsSubtitle: "Особисті дані",
     addMealEyebrow: "Твій щоденник",
@@ -147,6 +144,30 @@ export const translations = {
     navRecords: "Мої записи",
     navAddMeal: "Додати страву",
     navRecipes: "Рецепти",
+    navSettings: "Налаштування",
+    settingsVisualBadge: "Твої параметри",
+    settingsPageEyebrow: "Налаштування акаунта",
+    settingsPageTitle: "Усе важливе — в одному місці.",
+    settingsSectionTitle: "Параметри акаунта",
+    settingsPageDescription:
+      "Керуй email для відновлення, мовою інтерфейсу та безпекою акаунта.",
+    recoveryEmailEyebrow: "Відновлення доступу",
+    recoveryEmailTitle: "Email для відновлення пароля",
+    recoveryEmailDescription:
+      "На цю адресу надсилатиметься код, якщо ти забудеш пароль.",
+    saveEmailButton: "Зберегти email",
+    emailSettingsSaved: "Email для відновлення збережено.",
+    emailAlreadyRegistered: "Цей email уже використовується іншим акаунтом.",
+    settingsSaveError: "Не вдалося зберегти налаштування. Спробуй ще раз.",
+    preferencesEyebrow: "Параметри",
+    languageSettingsTitle: "Мова інтерфейсу",
+    languageSettingsDescription:
+      "Мову можна також швидко змінити в шапці сайту.",
+    securityEyebrow: "Безпека",
+    passwordSettingsTitle: "Пароль акаунта",
+    passwordSettingsDescription:
+      "Для скидання пароля скористайся кнопкою «Забули пароль?» на екрані входу. Скидання доступне раз на 7 днів.",
+    resetPasswordFromSettings: "Вийти та скинути пароль",
     recipeVisualBadge: "Ідея, яку можна приготувати",
     recipeEyebrow: "Твоя кухня, твій вибір",
     recipePageTitle: "Перетвори ідею на власний рецепт.",
@@ -207,6 +228,27 @@ export const translations = {
     profileTargetNote: "Орієнтир на день, розрахований для твого профілю.",
     profilePrivacyNote:
       "Можеш змінити ці дані будь-коли — денна ціль оновиться автоматично.",
+    emailLabel: "Email",
+    emailPlaceholder: "name@example.com",
+    forgotPasswordButton: "Забули пароль?",
+    passwordRecoveryTitle: "Відновлення пароля",
+    passwordRecoveryDescription:
+      "Вкажи email, прив’язаний до акаунта. Ми надішлемо код для відновлення. Пароль можна змінювати раз на 7 днів.",
+    sendResetCode: "Надіслати код",
+    sendingResetCode: "Надсилаємо запит…",
+    resetCodeLabel: "Код із листа",
+    newPasswordLabel: "Новий пароль",
+    resetPasswordButton: "Зберегти новий пароль",
+    recoveryBack: "Змінити email",
+    resetCodeSent:
+      "Якщо цей email пов’язаний з акаунтом, на нього надіслано код.",
+    passwordResetSuccess: "Пароль успішно змінено. Увійди з новим паролем.",
+    resetCodeInvalid: "Код недійсний або термін його дії минув.",
+    newPasswordSame: "Новий пароль має відрізнятися від поточного.",
+    passwordChangeTooSoon: "Пароль можна змінити лише раз на 7 днів.",
+    emailServiceNotConfigured:
+      "Відновлення пароля ще не налаштовано. Звернися до адміністратора.",
+    passwordRecoveryError: "Не вдалося відновити пароль. Спробуй ще раз.",
     recordsVisualBadge: "Щоденник турботи про себе",
     recordsPageEyebrow: "Послідовність важливіша за досконалість",
     recordsPageTitle: "Помічай свій прогрес день за днем.",
@@ -246,7 +288,6 @@ export const translations = {
     error: "Щось пішло не так",
   },
   ru: {
-    brandTagline: "баланс на каждый день",
     headerNote: "Забота о себе начинается с малого",
     siteAbout: "О нас",
     siteHow: "Как это работает",
@@ -325,8 +366,6 @@ export const translations = {
       "Создай профиль, чтобы получить персональную дневную норму и следить за питанием.",
     optionalDetails: "Для более точной нормы · необязательно",
     authFootnote: "Твои данные остаются только в твоём профиле",
-    footerRights: "Пространство для сбалансированных привычек",
-    footerNote: "Создано с заботой о тебе",
     profileDetailsTitle: "Твой профиль",
     profileSettingsSubtitle: "Личные данные",
     addMealEyebrow: "Твой дневник",
@@ -393,6 +432,30 @@ export const translations = {
     navRecords: "Мои записи",
     navAddMeal: "Добавить блюдо",
     navRecipes: "Рецепты",
+    navSettings: "Настройки",
+    settingsVisualBadge: "Твои параметры",
+    settingsPageEyebrow: "Настройки аккаунта",
+    settingsPageTitle: "Всё важное — в одном месте.",
+    settingsSectionTitle: "Параметры аккаунта",
+    settingsPageDescription:
+      "Управляй email для восстановления, языком интерфейса и безопасностью аккаунта.",
+    recoveryEmailEyebrow: "Восстановление доступа",
+    recoveryEmailTitle: "Email для восстановления пароля",
+    recoveryEmailDescription:
+      "На этот адрес будет отправлен код, если ты забудешь пароль.",
+    saveEmailButton: "Сохранить email",
+    emailSettingsSaved: "Email для восстановления сохранён.",
+    emailAlreadyRegistered: "Этот email уже используется другим аккаунтом.",
+    settingsSaveError: "Не удалось сохранить настройки. Попробуй ещё раз.",
+    preferencesEyebrow: "Параметры",
+    languageSettingsTitle: "Язык интерфейса",
+    languageSettingsDescription:
+      "Язык также можно быстро изменить в шапке сайта.",
+    securityEyebrow: "Безопасность",
+    passwordSettingsTitle: "Пароль аккаунта",
+    passwordSettingsDescription:
+      "Чтобы сбросить пароль, нажми «Забыли пароль?» на экране входа. Сброс доступен раз в 7 дней.",
+    resetPasswordFromSettings: "Выйти и сбросить пароль",
     recipeVisualBadge: "Идея, которую можно приготовить",
     recipeEyebrow: "Твоя кухня, твой выбор",
     recipePageTitle: "Преврати идею в собственный рецепт.",
@@ -453,6 +516,26 @@ export const translations = {
     profileTargetNote: "Ориентир на день, рассчитанный для твоего профиля.",
     profilePrivacyNote:
       "Эти данные можно изменить в любой момент — дневная цель обновится автоматически.",
+    emailLabel: "Email",
+    emailPlaceholder: "name@example.com",
+    forgotPasswordButton: "Забыли пароль?",
+    passwordRecoveryTitle: "Восстановление пароля",
+    passwordRecoveryDescription:
+      "Укажи email, привязанный к аккаунту. Мы отправим код для восстановления. Пароль можно менять раз в 7 дней.",
+    sendResetCode: "Отправить код",
+    sendingResetCode: "Отправляем запрос…",
+    resetCodeLabel: "Код из письма",
+    newPasswordLabel: "Новый пароль",
+    resetPasswordButton: "Сохранить новый пароль",
+    recoveryBack: "Изменить email",
+    resetCodeSent: "Если этот email связан с аккаунтом, на него отправлен код.",
+    passwordResetSuccess: "Пароль успешно изменён. Войди с новым паролем.",
+    resetCodeInvalid: "Код недействителен или срок его действия истёк.",
+    newPasswordSame: "Новый пароль должен отличаться от текущего.",
+    passwordChangeTooSoon: "Пароль можно менять только раз в 7 дней.",
+    emailServiceNotConfigured:
+      "Восстановление пароля ещё не настроено. Обратись к администратору.",
+    passwordRecoveryError: "Не удалось восстановить пароль. Попробуй ещё раз.",
     recordsVisualBadge: "Дневник заботы о себе",
     recordsPageEyebrow: "Последовательность важнее совершенства",
     recordsPageTitle: "Замечай свой прогресс день за днём.",
@@ -492,7 +575,6 @@ export const translations = {
     error: "Что-то пошло не так",
   },
   en: {
-    brandTagline: "everyday balance",
     headerNote: "Taking care of yourself starts small",
     siteAbout: "About",
     siteHow: "How it works",
@@ -571,8 +653,6 @@ export const translations = {
       "Create a profile for a personal daily target and a clearer view of your meals.",
     optionalDetails: "For a more accurate daily target · optional",
     authFootnote: "Your details stay in your profile",
-    footerRights: "A space for balanced habits",
-    footerNote: "Made with care for you",
     profileDetailsTitle: "Your profile",
     profileSettingsSubtitle: "Personal details",
     addMealEyebrow: "Your food journal",
@@ -639,6 +719,30 @@ export const translations = {
     navRecords: "My entries",
     navAddMeal: "Add a meal",
     navRecipes: "Recipes",
+    navSettings: "Settings",
+    settingsVisualBadge: "Your preferences",
+    settingsPageEyebrow: "Account settings",
+    settingsPageTitle: "Everything important, in one place.",
+    settingsSectionTitle: "Account preferences",
+    settingsPageDescription:
+      "Manage your recovery email, interface language, and account security.",
+    recoveryEmailEyebrow: "Account recovery",
+    recoveryEmailTitle: "Password recovery email",
+    recoveryEmailDescription:
+      "We’ll send a reset code to this address if you forget your password.",
+    saveEmailButton: "Save email",
+    emailSettingsSaved: "Recovery email saved.",
+    emailAlreadyRegistered: "This email is already used by another account.",
+    settingsSaveError: "Could not save settings. Please try again.",
+    preferencesEyebrow: "Preferences",
+    languageSettingsTitle: "Interface language",
+    languageSettingsDescription:
+      "You can also change the language from the site header.",
+    securityEyebrow: "Security",
+    passwordSettingsTitle: "Account password",
+    passwordSettingsDescription:
+      "To reset your password, use “Forgot password?” on the sign-in screen. Password resets are limited to once every 7 days.",
+    resetPasswordFromSettings: "Sign out and reset password",
     recipeVisualBadge: "An idea ready to cook",
     recipeEyebrow: "Your kitchen, your choice",
     recipePageTitle: "Turn an idea into your own recipe.",
@@ -699,6 +803,28 @@ export const translations = {
     profileTargetNote: "A daily guide calculated for your profile.",
     profilePrivacyNote:
       "You can change these details anytime — your daily target will update automatically.",
+    emailLabel: "Email",
+    emailPlaceholder: "name@example.com",
+    forgotPasswordButton: "Forgot password?",
+    passwordRecoveryTitle: "Reset your password",
+    passwordRecoveryDescription:
+      "Enter the email address linked to your account. We’ll send you a reset code. Passwords can be reset once every 7 days.",
+    sendResetCode: "Send reset code",
+    sendingResetCode: "Sending request…",
+    resetCodeLabel: "Email code",
+    newPasswordLabel: "New password",
+    resetPasswordButton: "Save new password",
+    recoveryBack: "Change email",
+    resetCodeSent:
+      "If this email is linked to an account, a reset code has been sent.",
+    passwordResetSuccess: "Password changed. Sign in with your new password.",
+    resetCodeInvalid: "The code is invalid or has expired.",
+    newPasswordSame: "The new password must be different from the current one.",
+    passwordChangeTooSoon:
+      "You can change your password only once every 7 days.",
+    emailServiceNotConfigured:
+      "Password recovery is not configured yet. Contact the administrator.",
+    passwordRecoveryError: "Could not reset the password. Please try again.",
     recordsVisualBadge: "Your self-care journal",
     recordsPageEyebrow: "Consistency matters more than perfection",
     recordsPageTitle: "Notice your progress, one day at a time.",
@@ -760,8 +886,9 @@ export function setLanguage(lang) {
   document.documentElement.lang = lang;
   localStorage.setItem("calorie_lang", lang);
 
-  const selector = document.getElementById("language-select");
-  if (selector) selector.value = lang;
+  document.querySelectorAll("[data-language-select]").forEach((selector) => {
+    selector.value = lang;
+  });
   window.dispatchEvent(new Event("calorie:language-changed"));
 }
 

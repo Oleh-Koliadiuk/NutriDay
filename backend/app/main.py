@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -10,9 +11,12 @@ from .api.nutrition import router as nutrition_router
 from .api.recipes import router as recipes_router
 from .core.config import settings
 from .database.base import Base
+from .database.migrations import apply_schema_migrations
 from .database.session import engine
+from .services.email_service import EmailService
 from . import models  # noqa: F401 - register models with SQLAlchemy metadata
 
+logger = logging.getLogger("uvicorn.error")
 app = FastAPI(title=settings.project_name, version="1.0.0")
 
 app.add_middleware(
@@ -40,6 +44,16 @@ for asset_directory in ("js", "css", "assets"):
 @app.on_event("startup")
 def startup_event() -> None:
     Base.metadata.create_all(bind=engine)
+    apply_schema_migrations()
+    logger.info(
+        "SMTP startup config: configured=%s host=%s port=%s tls=%s ssl=%s auth_credentials_present=%s",
+        EmailService.is_configured(),
+        settings.smtp_host or "unset",
+        settings.smtp_port,
+        settings.smtp_use_tls,
+        settings.smtp_use_ssl,
+        bool(settings.smtp_username and settings.smtp_password),
+    )
 
 
 @app.get("/health")

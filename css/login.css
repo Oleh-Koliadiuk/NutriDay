@@ -197,6 +197,23 @@
   display: block;
   animation: form-in 0.35s ease both;
 }
+.forgot-password-btn {
+  display: block;
+  margin: 13px 0 0 auto;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: var(--green);
+  font:
+    700 0.72rem "Avenir Next",
+    Avenir,
+    sans-serif;
+  cursor: pointer;
+}
+.forgot-password-btn:hover {
+  color: var(--green-dark);
+  text-decoration: underline;
+}
 .input-group {
   display: flex;
   flex-direction: column;
@@ -534,6 +551,56 @@
 }
 .dialog-card textarea {
   resize: vertical;
+}
+.password-recovery-dialog {
+  width: min(94vw, 460px);
+}
+.recovery-card {
+  gap: 14px;
+}
+.recovery-card > .eyebrow {
+  margin-bottom: 0;
+}
+.recovery-description,
+.recovery-email-summary {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.recovery-form {
+  display: grid;
+  gap: 10px;
+}
+.recovery-form.hidden {
+  display: none;
+}
+.recovery-form label {
+  color: var(--ink-soft);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+.recovery-form .primary-btn {
+  width: 100%;
+  margin-top: 3px;
+}
+.recovery-back-button {
+  justify-self: start;
+  padding-left: 0;
+}
+.recovery-status {
+  min-height: 1.35em;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+.recovery-status.success {
+  color: var(--green);
+}
+.recovery-status.error {
+  color: #a6493d;
 }
 .dialog-close {
   position: absolute;

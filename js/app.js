@@ -42,12 +42,38 @@ function bindEvents() {
   document.querySelectorAll(".tab-button").forEach((button) => {
     button.addEventListener("click", () => switchTab(button.dataset.tab));
   });
-  document
-    .getElementById("language-select")
-    .addEventListener("change", (event) => {
+  document.querySelectorAll("[data-language-select]").forEach((selector) => {
+    selector.addEventListener("change", (event) => {
       state.lang = event.target.value;
       setLanguage(state.lang);
     });
+  });
+  const shell = document.querySelector(".page-shell");
+  const sidebar = document.getElementById("account-sidebar");
+  const sidebarToggle = document.getElementById("sidebar-toggle");
+  const sidebarBackdrop = document.getElementById("sidebar-backdrop");
+  const setSidebarOpen = (isOpen) => {
+    shell.classList.toggle("sidebar-open", isOpen);
+    sidebarToggle.setAttribute("aria-expanded", String(isOpen));
+    sidebarToggle.setAttribute(
+      "aria-label",
+      isOpen ? "Закрити меню" : "Відкрити меню",
+    );
+    sidebar.inert = !isOpen;
+  };
+  sidebarToggle.addEventListener("click", () => {
+    setSidebarOpen(sidebarToggle.getAttribute("aria-expanded") !== "true");
+  });
+  sidebarBackdrop.addEventListener("click", () => setSidebarOpen(false));
+  sidebar.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", () => setSidebarOpen(false));
+  });
+  document
+    .getElementById("logout-btn")
+    .addEventListener("click", () => setSidebarOpen(false));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setSidebarOpen(false);
+  });
   document.getElementById("current-year").textContent =
     new Date().getFullYear();
   bindAuthEvents();

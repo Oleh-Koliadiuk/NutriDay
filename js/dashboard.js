@@ -18,6 +18,7 @@ let selectedDay = localToday();
 let currentDayData = null;
 let editingField = "";
 let editingMeal = null;
+let emailStatusTimer = null;
 
 function localToday() {
   const now = new Date();
@@ -33,6 +34,7 @@ function formatNumber(value) {
 function renderProfile(user) {
   document.getElementById("welcome-name").textContent = user.name;
   document.getElementById("profile-name").textContent = user.name;
+  document.getElementById("settings-email").value = user.email || "";
   document.getElementById("profile-age").textContent = user.age ?? "—";
   document.getElementById("profile-height").textContent = user.height ?? "—";
   document.getElementById("profile-weight").textContent = user.weight ?? "—";
@@ -65,7 +67,13 @@ export function renderDashboard(user) {
 }
 
 function activatePage(page) {
-  const availablePages = new Set(["profile", "records", "add", "recipe"]);
+  const availablePages = new Set([
+    "profile",
+    "records",
+    "add",
+    "recipe",
+    "settings",
+  ]);
   const selectedPage = availablePages.has(page) ? page : "profile";
   document.querySelectorAll(".dashboard-page").forEach((section) => {
     section.classList.toggle("hidden", section.dataset.page !== selectedPage);
@@ -277,7 +285,7 @@ function openProfileEditor(field) {
   input.min = selected.min;
   input.max = selected.max;
   input.step = field === "weight" ? "0.1" : "1";
-  input.required = field === "name";
+  input.required = field === "name" || field === "email";
   profileDialog.showModal();
   input.focus();
 }
@@ -296,13 +304,9 @@ function openMealEditor(meal) {
 async function saveProfileEdit(event) {
   event.preventDefault();
   const input = document.getElementById("profile-edit-value");
-  const value =
-    editingField === "name" ? input.value.trim() : Number(input.value);
-  if (
-    !input.value.trim() ||
-    (editingField !== "name" && !Number.isFinite(value))
-  )
-    return;
+  const isTextField = editingField === "name";
+  const value = isTextField ? input.value.trim() : Number(input.value);
+  if (!input.value.trim() || (!isTextField && !Number.isFinite(value))) return;
   const saveButton = document.getElementById("profile-edit-save");
   saveButton.disabled = true;
   try {
@@ -316,6 +320,46 @@ async function saveProfileEdit(event) {
       error.message || t("saveError");
   } finally {
     saveButton.disabled = false;
+  }
+}
+
+async function saveSettingsEmail(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const input = document.getElementById("settings-email");
+  const status = document.getElementById("settings-email-status");
+  const button = document.getElementById("settings-email-save");
+  if (!input.checkValidity()) return input.reportValidity();
+
+  window.clearTimeout(emailStatusTimer);
+  status.textContent = "";
+  status.className = "settings-status";
+  button.disabled = true;
+  try {
+    const user = await updateProfile({
+      email: input.value.trim().toLowerCase(),
+    });
+    state.user = user;
+    activeUser = user;
+    localStorage.setItem("calorie_user", JSON.stringify(user));
+    form.reset();
+    input.value = user.email || "";
+    status.textContent = t("emailSettingsSaved");
+    status.classList.add("success");
+  } catch (error) {
+    status.textContent =
+      error.message === "Email is already registered"
+        ? t("emailAlreadyRegistered")
+        : t("settingsSaveError");
+    status.classList.add("error");
+  } finally {
+    button.disabled = false;
+    if (status.textContent) {
+      emailStatusTimer = window.setTimeout(() => {
+        status.textContent = "";
+        status.className = "settings-status";
+      }, 4500);
+    }
   }
 }
 
@@ -367,7 +411,10 @@ export function bindDashboardEvents() {
   });
   window.addEventListener("hashchange", () => {
     const page = location.hash.slice(1);
-    if (activeUser && ["profile", "records", "add", "recipe"].includes(page)) {
+    if (
+      activeUser &&
+      ["profile", "records", "add", "recipe", "settings"].includes(page)
+    ) {
       activatePage(page);
     }
   });
@@ -389,6 +436,9 @@ export function bindDashboardEvents() {
   document
     .getElementById("profile-edit-form")
     .addEventListener("submit", saveProfileEdit);
+  document
+    .getElementById("settings-email-form")
+    .addEventListener("submit", saveSettingsEmail);
   document
     .getElementById("meal-edit-form")
     .addEventListener("submit", saveMealEdit);

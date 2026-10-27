@@ -25,12 +25,13 @@ async function apiRequest(path, options = {}) {
 
   if (!response.ok) {
     const detail = Array.isArray(payload.detail)
-      ? payload.detail.map((issue) => issue.msg).filter(Boolean).join("; ")
+      ? payload.detail
+          .map((issue) => issue.msg)
+          .filter(Boolean)
+          .join("; ")
       : payload.detail;
     throw new Error(
-      detail ||
-        payload.message ||
-        `Request failed (${response.status})`,
+      detail || payload.message || `Request failed (${response.status})`,
     );
   }
   return payload;

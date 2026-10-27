@@ -85,21 +85,33 @@ function showRecipe(recipe, id = null) {
   const ingredients = byId("recipe-ingredients");
   ingredients.replaceChildren(...(recipe.ingredients || []).map(ingredientRow));
   const instructions = byId("recipe-instructions");
-  instructions.replaceChildren(...(recipe.instructions || []).map(instructionRow));
+  instructions.replaceChildren(
+    ...(recipe.instructions || []).map(instructionRow),
+  );
   byId("recipe-editor").classList.remove("hidden");
-  byId("recipe-save-button").textContent = id ? t("recipeUpdateButton") : t("recipeSaveButton");
+  byId("recipe-save-button").textContent = id
+    ? t("recipeUpdateButton")
+    : t("recipeSaveButton");
   setStatus("recipe-save-status", "");
   byId("recipe-editor").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function collectRecipe() {
-  const ingredients = [...byId("recipe-ingredients").querySelectorAll(".recipe-ingredient-row")]
+  const ingredients = [
+    ...byId("recipe-ingredients").querySelectorAll(".recipe-ingredient-row"),
+  ]
     .map((row) => {
       const [name, grams, note] = row.querySelectorAll("input");
-      return { name: name.value.trim(), grams: Number(grams.value), note: note.value.trim() };
+      return {
+        name: name.value.trim(),
+        grams: Number(grams.value),
+        note: note.value.trim(),
+      };
     })
     .filter((ingredient) => ingredient.name);
-  const instructions = [...byId("recipe-instructions").querySelectorAll("textarea")]
+  const instructions = [
+    ...byId("recipe-instructions").querySelectorAll("textarea"),
+  ]
     .map((step) => step.value.trim())
     .filter(Boolean);
   return {
@@ -151,7 +163,11 @@ function renderSavedRecipes(recipes) {
         if (editingRecipeId === recipe.id) resetEditor();
         await loadSavedRecipes();
       } catch (error) {
-        setStatus("recipe-save-status", error.message || t("recipeSaveError"), "error");
+        setStatus(
+          "recipe-save-status",
+          error.message || t("recipeSaveError"),
+          "error",
+        );
         remove.disabled = false;
       }
     });
@@ -164,7 +180,11 @@ export async function loadSavedRecipes() {
   try {
     renderSavedRecipes(await getRecipes());
   } catch (error) {
-    setStatus("recipe-save-status", error.message || t("recipeLoadError"), "error");
+    setStatus(
+      "recipe-save-status",
+      error.message || t("recipeLoadError"),
+      "error",
+    );
   }
 }
 
@@ -197,7 +217,11 @@ async function handleGenerate() {
     showRecipe(recipe);
     setStatus("recipe-generation-status", t("recipeGenerated"), "success");
   } catch (error) {
-    setStatus("recipe-generation-status", error.message || t("recipeGenerateError"), "error");
+    setStatus(
+      "recipe-generation-status",
+      error.message || t("recipeGenerateError"),
+      "error",
+    );
   } finally {
     button.disabled = false;
   }
@@ -205,7 +229,13 @@ async function handleGenerate() {
 
 async function handleSave() {
   const recipe = collectRecipe();
-  if (!recipe.title || !recipe.total_weight_g || !recipe.servings || !recipe.ingredients.length || !recipe.instructions.length) {
+  if (
+    !recipe.title ||
+    !recipe.total_weight_g ||
+    !recipe.servings ||
+    !recipe.ingredients.length ||
+    !recipe.instructions.length
+  ) {
     setStatus("recipe-save-status", t("recipeFillRequired"), "error");
     return;
   }
@@ -220,7 +250,11 @@ async function handleSave() {
     setStatus("recipe-save-status", t("recipeSaved"), "success");
     await loadSavedRecipes();
   } catch (error) {
-    setStatus("recipe-save-status", error.message || t("recipeSaveError"), "error");
+    setStatus(
+      "recipe-save-status",
+      error.message || t("recipeSaveError"),
+      "error",
+    );
   } finally {
     button.disabled = false;
   }
@@ -229,8 +263,12 @@ async function handleSave() {
 export function bindRecipeEvents() {
   byId("recipe-generate-button").addEventListener("click", handleGenerate);
   byId("recipe-save-button").addEventListener("click", handleSave);
-  byId("recipe-add-ingredient").addEventListener("click", () => byId("recipe-ingredients").append(ingredientRow()));
-  byId("recipe-add-step").addEventListener("click", () => byId("recipe-instructions").append(instructionRow()));
+  byId("recipe-add-ingredient").addEventListener("click", () =>
+    byId("recipe-ingredients").append(ingredientRow()),
+  );
+  byId("recipe-add-step").addEventListener("click", () =>
+    byId("recipe-instructions").append(instructionRow()),
+  );
   byId("recipe-new-button").addEventListener("click", resetEditor);
   window.addEventListener("calorie:user-ready", loadSavedRecipes);
   window.addEventListener("calorie:language-changed", () => {

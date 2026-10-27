@@ -25,7 +25,9 @@ function localToday() {
 }
 
 function formatNumber(value) {
-  return new Intl.NumberFormat(state.lang, { maximumFractionDigits: 0 }).format(value || 0);
+  return new Intl.NumberFormat(state.lang, { maximumFractionDigits: 0 }).format(
+    value || 0,
+  );
 }
 
 function renderProfile(user) {
@@ -34,10 +36,15 @@ function renderProfile(user) {
   document.getElementById("profile-age").textContent = user.age ?? "—";
   document.getElementById("profile-height").textContent = user.height ?? "—";
   document.getElementById("profile-weight").textContent = user.weight ?? "—";
-  document.getElementById("profile-calorie-target").textContent = formatNumber(user.daily_calories);
-  document.getElementById("protein-target").textContent = `${formatNumber(user.protein_goal)} g`;
-  document.getElementById("carbs-target").textContent = `${formatNumber(user.carbs_goal)} g`;
-  document.getElementById("fat-target").textContent = `${formatNumber(user.fat_goal)} g`;
+  document.getElementById("profile-calorie-target").textContent = formatNumber(
+    user.daily_calories,
+  );
+  document.getElementById("protein-target").textContent =
+    `${formatNumber(user.protein_goal)} g`;
+  document.getElementById("carbs-target").textContent =
+    `${formatNumber(user.carbs_goal)} g`;
+  document.getElementById("fat-target").textContent =
+    `${formatNumber(user.fat_goal)} g`;
 }
 
 export function renderDashboard(user) {
@@ -77,12 +84,16 @@ async function loadDashboardData() {
   dateInput.value = selectedDay;
   dateInput.max = localToday();
   try {
-    const [dayData, history] = await Promise.all([getDay(selectedDay), getHistory()]);
+    const [dayData, history] = await Promise.all([
+      getDay(selectedDay),
+      getHistory(),
+    ]);
     currentDayData = dayData;
     renderDay(dayData);
     renderHistory(history);
   } catch (error) {
-    document.getElementById("meal-list").textContent = error.message || t("loadError");
+    document.getElementById("meal-list").textContent =
+      error.message || t("loadError");
   }
 }
 
@@ -90,29 +101,48 @@ function renderDay(day) {
   const isToday = day.day === localToday();
   document.getElementById("selected-day-title").textContent = isToday
     ? t("today")
-    : new Intl.DateTimeFormat(state.lang, { dateStyle: "full" }).format(new Date(`${day.day}T12:00:00`));
-  document.getElementById("calories-eaten").textContent = formatNumber(day.calories);
-  document.getElementById("calories-target-label").textContent = formatNumber(day.calorie_target);
-  const percent = day.calorie_target > 0 ? (day.calories / day.calorie_target) * 100 : 0;
+    : new Intl.DateTimeFormat(state.lang, { dateStyle: "full" }).format(
+        new Date(`${day.day}T12:00:00`),
+      );
+  document.getElementById("calories-eaten").textContent = formatNumber(
+    day.calories,
+  );
+  document.getElementById("calories-target-label").textContent = formatNumber(
+    day.calorie_target,
+  );
+  const percent =
+    day.calorie_target > 0 ? (day.calories / day.calorie_target) * 100 : 0;
   const progress = document.getElementById("calorie-progress");
   progress.style.width = `${Math.min(100, percent)}%`;
   progress.classList.toggle("over-target", percent > 100);
-  progress.setAttribute("aria-valuenow", String(Math.min(100, Math.round(percent))));
-  document.getElementById("calorie-progress-label").textContent = t("progressLabel", {
-    percent: formatNumber(Math.round(percent)),
-    remaining: formatNumber(Math.max(0, day.calorie_target - day.calories)),
-  });
-  document.getElementById("protein-eaten").textContent = `${formatNumber(day.protein)} g`;
-  document.getElementById("carbs-eaten").textContent = `${formatNumber(day.carbs)} g`;
-  document.getElementById("fat-eaten").textContent = `${formatNumber(day.fat)} g`;
-  document.getElementById("daily-insight").textContent = day.insight || t("insightPlaceholder");
+  progress.setAttribute(
+    "aria-valuenow",
+    String(Math.min(100, Math.round(percent))),
+  );
+  document.getElementById("calorie-progress-label").textContent = t(
+    "progressLabel",
+    {
+      percent: formatNumber(Math.round(percent)),
+      remaining: formatNumber(Math.max(0, day.calorie_target - day.calories)),
+    },
+  );
+  document.getElementById("protein-eaten").textContent =
+    `${formatNumber(day.protein)} g`;
+  document.getElementById("carbs-eaten").textContent =
+    `${formatNumber(day.carbs)} g`;
+  document.getElementById("fat-eaten").textContent =
+    `${formatNumber(day.fat)} g`;
+  document.getElementById("daily-insight").textContent =
+    day.insight || t("insightPlaceholder");
   renderMeals(day.meals || []);
 }
 
 function renderMeals(meals) {
   const list = document.getElementById("meal-list");
   list.replaceChildren();
-  document.getElementById("meal-count-badge").textContent = String(meals.length);
+  document.getElementById("meal-count-badge").textContent = String(
+    meals.length,
+  );
   if (!meals.length) {
     const empty = document.createElement("li");
     empty.className = "empty-state";
@@ -132,7 +162,9 @@ function renderMeals(meals) {
     title.textContent = meal.name;
     const source = document.createElement("span");
     source.className = "meal-source";
-    source.textContent = t(meal.source === "image" ? "photoSource" : "textSource");
+    source.textContent = t(
+      meal.source === "image" ? "photoSource" : "textSource",
+    );
     heading.append(title, source);
     const description = document.createElement("p");
     description.textContent = meal.description || meal.summary || "";
@@ -194,7 +226,10 @@ function renderHistory(history) {
     button.type = "button";
     button.className = `history-day${day.day === selectedDay ? " active" : ""}`;
     const date = document.createElement("span");
-    date.textContent = new Intl.DateTimeFormat(state.lang, { month: "short", day: "numeric" }).format(new Date(`${day.day}T12:00:00`));
+    date.textContent = new Intl.DateTimeFormat(state.lang, {
+      month: "short",
+      day: "numeric",
+    }).format(new Date(`${day.day}T12:00:00`));
     const calories = document.createElement("strong");
     calories.textContent = `${formatNumber(day.calories)} / ${formatNumber(day.calorie_target)} kcal`;
     const meals = document.createElement("small");
@@ -222,8 +257,18 @@ function openProfileEditor(field) {
   const fieldMap = {
     name: { type: "text", value: activeUser.name, min: "", max: "" },
     age: { type: "number", value: activeUser.age ?? "", min: "10", max: "120" },
-    height: { type: "number", value: activeUser.height ?? "", min: "100", max: "260" },
-    weight: { type: "number", value: activeUser.weight ?? "", min: "30", max: "300" },
+    height: {
+      type: "number",
+      value: activeUser.height ?? "",
+      min: "100",
+      max: "260",
+    },
+    weight: {
+      type: "number",
+      value: activeUser.weight ?? "",
+      min: "30",
+      max: "300",
+    },
   };
   const selected = fieldMap[field];
   label.textContent = profileEditLabel(field);
@@ -240,7 +285,8 @@ function openProfileEditor(field) {
 function openMealEditor(meal) {
   editingMeal = meal;
   document.getElementById("meal-edit-name").value = meal.name;
-  document.getElementById("meal-edit-description").value = meal.description || "";
+  document.getElementById("meal-edit-description").value =
+    meal.description || "";
   for (const field of ["calories", "protein", "carbs", "fat"]) {
     document.getElementById(`meal-edit-${field}`).value = meal[field];
   }
@@ -250,8 +296,13 @@ function openMealEditor(meal) {
 async function saveProfileEdit(event) {
   event.preventDefault();
   const input = document.getElementById("profile-edit-value");
-  const value = editingField === "name" ? input.value.trim() : Number(input.value);
-  if (!input.value.trim() || (editingField !== "name" && !Number.isFinite(value))) return;
+  const value =
+    editingField === "name" ? input.value.trim() : Number(input.value);
+  if (
+    !input.value.trim() ||
+    (editingField !== "name" && !Number.isFinite(value))
+  )
+    return;
   const saveButton = document.getElementById("profile-edit-save");
   saveButton.disabled = true;
   try {
@@ -261,7 +312,8 @@ async function saveProfileEdit(event) {
     profileDialog.close();
     renderDashboard(user);
   } catch (error) {
-    document.getElementById("profile-edit-error").textContent = error.message || t("saveError");
+    document.getElementById("profile-edit-error").textContent =
+      error.message || t("saveError");
   } finally {
     saveButton.disabled = false;
   }
@@ -275,7 +327,9 @@ async function saveMealEdit(event) {
     description: document.getElementById("meal-edit-description").value.trim(),
   };
   for (const field of ["calories", "protein", "carbs", "fat"]) {
-    payload[field] = Number(document.getElementById(`meal-edit-${field}`).value);
+    payload[field] = Number(
+      document.getElementById(`meal-edit-${field}`).value,
+    );
   }
   const saveButton = document.getElementById("meal-edit-save");
   saveButton.disabled = true;
@@ -285,7 +339,8 @@ async function saveMealEdit(event) {
     editingMeal = null;
     await loadDashboardData();
   } catch (error) {
-    document.getElementById("meal-edit-error").textContent = error.message || t("saveError");
+    document.getElementById("meal-edit-error").textContent =
+      error.message || t("saveError");
   } finally {
     saveButton.disabled = false;
   }
@@ -317,19 +372,31 @@ export function bindDashboardEvents() {
     }
   });
   document.querySelectorAll("[data-edit-field]").forEach((button) => {
-    button.addEventListener("click", () => openProfileEditor(button.dataset.editField));
+    button.addEventListener("click", () =>
+      openProfileEditor(button.dataset.editField),
+    );
   });
   document.getElementById("selected-day").value = selectedDay;
   document.getElementById("selected-day").max = localToday();
-  document.getElementById("selected-day").addEventListener("change", (event) => {
-    if (event.target.value) selectDay(event.target.value);
-  });
-  document.getElementById("insight-button").addEventListener("click", generateInsight);
-  document.getElementById("profile-edit-form").addEventListener("submit", saveProfileEdit);
-  document.getElementById("meal-edit-form").addEventListener("submit", saveMealEdit);
-  document.getElementById("profile-edit-value").addEventListener("input", () => {
-    document.getElementById("profile-edit-error").textContent = "";
-  });
+  document
+    .getElementById("selected-day")
+    .addEventListener("change", (event) => {
+      if (event.target.value) selectDay(event.target.value);
+    });
+  document
+    .getElementById("insight-button")
+    .addEventListener("click", generateInsight);
+  document
+    .getElementById("profile-edit-form")
+    .addEventListener("submit", saveProfileEdit);
+  document
+    .getElementById("meal-edit-form")
+    .addEventListener("submit", saveMealEdit);
+  document
+    .getElementById("profile-edit-value")
+    .addEventListener("input", () => {
+      document.getElementById("profile-edit-error").textContent = "";
+    });
   document.getElementById("meal-edit-form").addEventListener("input", () => {
     document.getElementById("meal-edit-error").textContent = "";
   });

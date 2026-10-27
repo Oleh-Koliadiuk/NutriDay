@@ -16,6 +16,8 @@ class User(Base):
     age: Mapped[int | None] = mapped_column(Integer, nullable=True)
     height: Mapped[int | None] = mapped_column(Integer, nullable=True)
     weight: Mapped[float | None] = mapped_column(Float, nullable=True)
+    goal: Mapped[str] = mapped_column(String(24), default="maintain", nullable=False)
+    biological_sex: Mapped[str | None] = mapped_column(String(10), nullable=True)
     daily_calories: Mapped[float] = mapped_column(Float, default=2100.0)
     protein_goal: Mapped[float] = mapped_column(Float, default=130.0)
     carbs_goal: Mapped[float] = mapped_column(Float, default=240.0)

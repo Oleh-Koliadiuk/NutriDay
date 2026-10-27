@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic import BaseModel, Field
 
 EMAIL_PATTERN = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
@@ -10,6 +12,8 @@ class UserCreate(BaseModel):
     age: int | None = None
     height: int | None = None
     weight: float | None = None
+    goal: Literal["gain_mass", "lose_weight", "maintain", "sports"] = "maintain"
+    biological_sex: Literal["male", "female"] | None = None
 
 
 class UserLogin(BaseModel):
@@ -39,6 +43,8 @@ class UserOut(BaseModel):
     age: int | None = None
     height: int | None = None
     weight: float | None = None
+    goal: str = "maintain"
+    biological_sex: str | None = None
     daily_calories: float
     protein_goal: float
     carbs_goal: float

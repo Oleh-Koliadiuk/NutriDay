@@ -589,6 +589,45 @@
                     </div>
                   </div>
                 </section>
+                <section class="goal-settings-card dashboard-card">
+                  <div class="goal-settings-heading">
+                    <p class="eyebrow" data-i18n="goalSettingsEyebrow">
+                      Харчова ціль
+                    </p>
+                    <h3 data-i18n="goalSettingsTitle">Обери свій напрям</h3>
+                    <p data-i18n="goalSettingsDescription">
+                      Ціль і біологічна стать допомагають налаштувати денний орієнтир та підказки.
+                    </p>
+                  </div>
+                  <form id="profile-goal-form" class="goal-settings-form">
+                    <label class="goal-setting-field" for="profile-goal">
+                      <span data-i18n="goalLabel">Мета</span>
+                      <select id="profile-goal" name="goal">
+                        <option value="maintain" data-i18n="goalMaintain">Утримання ваги</option>
+                        <option value="lose_weight" data-i18n="goalLoseWeight">Схуднення</option>
+                        <option value="gain_mass" data-i18n="goalGainMass">Набір маси</option>
+                        <option value="sports" data-i18n="goalSports">Спортивне харчування</option>
+                      </select>
+                    </label>
+                    <label class="goal-setting-field" for="profile-sex">
+                      <span data-i18n="biologicalSexLabel">Біологічна стать</span>
+                      <select id="profile-sex" name="biological_sex">
+                        <option value="" data-i18n="selectSex">Не вказано</option>
+                        <option value="female" data-i18n="sexFemale">Жіноча</option>
+                        <option value="male" data-i18n="sexMale">Чоловіча</option>
+                      </select>
+                    </label>
+                    <div class="goal-settings-actions">
+                      <button id="goal-settings-save" class="primary-btn" type="submit" data-i18n="save">
+                        Зберегти
+                      </button>
+                      <p id="goal-settings-status" class="settings-status" role="status" aria-live="polite"></p>
+                    </div>
+                  </form>
+                  <p class="goal-safety-note" data-i18n="goalSafetyNote">
+                    Орієнтовні розрахунки не замінюють консультацію фахівця. Для неповнолітніх ціль зміни ваги не змінює калорійну норму.
+                  </p>
+                </section>
                 <section
                   class="target-card"
                   aria-labelledby="target-card-title"

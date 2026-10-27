@@ -11,4 +11,8 @@ def apply_schema_migrations() -> None:
             connection.execute(text("ALTER TABLE users ADD COLUMN email VARCHAR(254)"))
         if "password_changed_at" not in user_columns:
             connection.execute(text("ALTER TABLE users ADD COLUMN password_changed_at DATETIME"))
+        if "goal" not in user_columns:
+            connection.execute(text("ALTER TABLE users ADD COLUMN goal VARCHAR(24) NOT NULL DEFAULT 'maintain'"))
+        if "biological_sex" not in user_columns:
+            connection.execute(text("ALTER TABLE users ADD COLUMN biological_sex VARCHAR(10)"))
         connection.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_users_email ON users (email)"))

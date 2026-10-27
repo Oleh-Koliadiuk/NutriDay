@@ -43,10 +43,10 @@ AI features use the **Google Gemini API**, through Google's google-genai Python 
 
 - Meal text analysis and food-photo analysis use gemini-3.8-flash.
 - For temporary capacity errors, those calls retry and can fall back to gemini-3.1-flash-lite.
-- Profile target calculation and daily insights also use Gemini when configured. Profile targets fall back to the built-in calorie-target calculator if Gemini is unavailable; daily insights have a local fallback.
+- Daily calorie and macronutrient targets are calculated locally from profile data, selected nutrition goal, and biological sex. Gemini generates daily food insights using the selected goal, profile details, and logged meals; a local fallback is shown when Gemini is unavailable.
 - Recipe generation tries gemini-3.1-flash-lite first and then gemini-3.8-flash.
 
-Set up a Gemini API key to enable AI meal analysis, image analysis, recipe generation, AI-assisted profile targets, and AI-generated daily suggestions. Without a key, the app still supports accounts, profile management, diary history, manual entry editing, and saved recipe management. AI-dependent operations that have no fallback return an unavailable result.
+Set up a Gemini API key to enable AI meal analysis, image analysis, recipe generation, and personalized daily suggestions. Without a key, the app still supports accounts, profile and goal management, diary history, manual entry editing, locally calculated targets, and saved recipe management. AI-dependent operations that have no fallback return an unavailable result.
 
 ## Technology
 

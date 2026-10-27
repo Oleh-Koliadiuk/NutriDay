@@ -519,6 +519,70 @@ html {
   background: #fffefa;
   box-shadow: 0 16px 48px rgba(31, 52, 38, 0.06);
 }
+.goal-settings-card {
+  margin-top: 16px;
+  padding: clamp(20px, 2.6vw, 30px);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #fffefa;
+  box-shadow: 0 14px 38px rgba(31, 52, 38, 0.045);
+}
+.goal-settings-heading h3 {
+  margin: 0 0 7px;
+  font: 500 clamp(1.2rem, 2vw, 1.55rem) Georgia, serif;
+}
+.goal-settings-heading > p:last-child,
+.goal-safety-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+.goal-settings-heading .eyebrow {
+  margin: 0 0 7px;
+}
+.goal-settings-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+  gap: 14px;
+  margin-top: 20px;
+}
+.goal-setting-field {
+  display: grid;
+  gap: 8px;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.goal-setting-field select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+}
+.goal-settings-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.goal-settings-actions .primary-btn {
+  min-width: 150px;
+}
+.goal-settings-actions .settings-status {
+  margin: 0;
+}
+.goal-safety-note {
+  margin-top: 17px;
+  padding-top: 15px;
+  border-top: 1px solid var(--line);
+  font-size: 0.7rem;
+}
 .profile-card-heading {
   display: flex;
   align-items: center;

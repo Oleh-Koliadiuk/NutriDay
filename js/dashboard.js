@@ -47,6 +47,8 @@ function renderProfile(user) {
     `${formatNumber(user.carbs_goal)} g`;
   document.getElementById("fat-target").textContent =
     `${formatNumber(user.fat_goal)} g`;
+  document.getElementById("profile-goal").value = user.goal || "maintain";
+  document.getElementById("profile-sex").value = user.biological_sex || "";
 }
 
 export function renderDashboard(user) {
@@ -396,7 +398,7 @@ async function generateInsight() {
   button.disabled = true;
   output.textContent = t("insightLoading");
   try {
-    await getDailyInsight(selectedDay);
+    await getDailyInsight(selectedDay, state.lang);
     await loadDashboardData();
   } catch (error) {
     output.textContent = error.message || t("loadError");
@@ -437,6 +439,9 @@ export function bindDashboardEvents() {
     .getElementById("profile-edit-form")
     .addEventListener("submit", saveProfileEdit);
   document
+    .getElementById("profile-goal-form")
+    .addEventListener("submit", saveGoalSettings);
+  document
     .getElementById("settings-email-form")
     .addEventListener("submit", saveSettingsEmail);
   document
@@ -459,4 +464,37 @@ export function bindDashboardEvents() {
     if (currentDayData) renderDay(currentDayData);
     if (activeUser) loadDashboardData();
   });
+}
+
+async function saveGoalSettings(event) {
+  event.preventDefault();
+  const button = document.getElementById("goal-settings-save");
+  const status = document.getElementById("goal-settings-status");
+  button.disabled = true;
+  status.textContent = "";
+  status.className = "settings-status";
+  try {
+    const user = await updateProfile({
+      goal: document.getElementById("profile-goal").value,
+      biological_sex: document.getElementById("profile-sex").value || null,
+    });
+    state.user = user;
+    activeUser = user;
+    localStorage.setItem("calorie_user", JSON.stringify(user));
+    renderProfile(user);
+    await loadDashboardData();
+    status.textContent = t("goalSettingsSaved");
+    status.classList.add("success");
+  } catch (error) {
+    status.textContent = error.message || t("goalSettingsError");
+    status.classList.add("error");
+  } finally {
+    button.disabled = false;
+    if (status.textContent) {
+      window.setTimeout(() => {
+        status.textContent = "";
+        status.className = "settings-status";
+      }, 4500);
+    }
+  }
 }

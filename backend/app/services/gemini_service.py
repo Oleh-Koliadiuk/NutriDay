@@ -125,14 +125,38 @@ class GeminiService:
             f"вуглеводи {meal['carbs']} г, жири {meal['fat']} г"
             for meal in day_data["meals"]
         ) or "Страви поки не записані."
+        language_names = {"uk": "українською", "ru": "російською", "en": "англійською"}
+        output_language = language_names.get(day_data.get("language"), language_names["uk"])
+        profile = day_data.get("profile", {})
+        age = profile.get("age")
+        minor = isinstance(age, int) and age < 18
+        goal_names = {
+            "gain_mass": "набір маси",
+            "lose_weight": "схуднення",
+            "maintain": "утримання ваги",
+            "sports": "спортивне харчування",
+        }
+        sex_names = {"male": "чоловіча", "female": "жіноча"}
+        safety = (
+            "Користувачу менше 18 років. Не радь дефіцит калорій, схуднення, набір ваги, "
+            "обмеження їжі або спортивні добавки. Наголоси на регулярному різноманітному харчуванні; "
+            "питання зміни ваги чи раціону запропонуй обговорити з батьками/опікуном і лікарем. "
+            if minor
+            else "Не сором, не діагностуй, не радь екстремальних обмежень, голодування чи добавок."
+        )
         prompt = (
-            "Дай одну коротку доброзичливу підказку українською за денним харчовим журналом. "
-            "Не сором і не діагностуй. Не радь екстремально обмежувати калорії. "
-            "Врахуй баланс білків, вуглеводів, жирів і калорій та сформулюй одну практичну ідею. "
+            f"Дай одну коротку доброзичливу персональну підказку {output_language} за денним журналом харчування. "
+            f"{safety} Врахуй ціль користувача, біологічні дані й фактично записані страви; "
+            "запропонуй одну практичну ідею щодо збалансованого прийому їжі. "
             f"Ціль: {day_data['calorie_target']} ккал, Б {day_data['protein_target']} г, "
             f"В {day_data['carbs_target']} г, Ж {day_data['fat_target']} г. "
             f"З'їдено: {day_data['calories']} ккал, Б {day_data['protein']} г, "
-            f"В {day_data['carbs']} г, Ж {day_data['fat']} г. Страви:\n{meals}"
+            f"В {day_data['carbs']} г, Ж {day_data['fat']} г. "
+            f"Профіль: вік {age if age is not None else 'не вказано'}, "
+            f"біологічна стать {sex_names.get(profile.get('biological_sex'), 'не вказана')}, "
+            f"зріст {profile.get('height') or 'не вказано'} см, "
+            f"вага {profile.get('weight') or 'не вказана'} кг, "
+            f"ціль {goal_names.get(profile.get('goal'), 'не вказана')}. Страви:\n{meals}"
         )
         try:
             response = self._generate_content(prompt)

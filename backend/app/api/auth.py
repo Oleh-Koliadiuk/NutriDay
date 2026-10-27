@@ -14,7 +14,6 @@ from ..models import DailyLog, PasswordResetCode, User
 from ..schemas import ForgotPasswordRequest, ResetPasswordRequest, TokenOut, UserCreate, UserLogin, UserOut, UserSkip, UserUpdate
 from ..services.calorie_targets import calculate_daily_targets
 from ..services.email_service import EmailService
-from ..services.gemini_service import GeminiService
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 logger = logging.getLogger("uvicorn.error")
@@ -36,6 +35,8 @@ def _serialize_user(user: User) -> UserOut:
         age=user.age,
         height=user.height,
         weight=user.weight,
+        goal=user.goal,
+        biological_sex=user.biological_sex,
         daily_calories=user.daily_calories,
         protein_goal=user.protein_goal,
         carbs_goal=user.carbs_goal,
@@ -52,7 +53,9 @@ def register_user(payload: UserCreate, db: Session = Depends(get_db)):
     if db.query(User).filter(User.email == email).first():
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email is already registered")
 
-    targets = calculate_daily_targets(payload.age, payload.height, payload.weight)
+    targets = calculate_daily_targets(
+        payload.age, payload.height, payload.weight, payload.biological_sex, payload.goal
+    )
     token = generate_token()
     user = User(
         name=payload.name,
@@ -61,6 +64,8 @@ def register_user(payload: UserCreate, db: Session = Depends(get_db)):
         age=payload.age,
         height=payload.height,
         weight=payload.weight,
+        goal=payload.goal,
+        biological_sex=payload.biological_sex,
         daily_calories=targets["calories"],
         protein_goal=targets["protein"],
         carbs_goal=targets["carbs"],
@@ -243,7 +248,7 @@ def update_me(
         if existing:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User with this name already exists")
 
-    for field in ("name", "age", "height", "weight"):
+    for field in ("name", "age", "height", "weight", "goal", "biological_sex"):
         if field in updates:
             setattr(current_user, field, updates[field])
 
@@ -257,12 +262,14 @@ def update_me(
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email is already registered")
         current_user.email = email
 
-    if any(field in updates for field in ("age", "height", "weight")):
-        targets = GeminiService().calculate_profile_targets(
+    if any(field in updates for field in ("age", "height", "weight", "goal", "biological_sex")):
+        targets = calculate_daily_targets(
             current_user.age,
             current_user.height,
             current_user.weight,
-        ) or calculate_daily_targets(current_user.age, current_user.height, current_user.weight)
+            current_user.biological_sex,
+            current_user.goal,
+        )
         current_user.daily_calories = targets["calories"]
         current_user.protein_goal = targets["protein"]
         current_user.carbs_goal = targets["carbs"]
@@ -277,6 +284,7 @@ def update_me(
             today_log.protein_target = current_user.protein_goal
             today_log.carbs_target = current_user.carbs_goal
             today_log.fat_target = current_user.fat_goal
+            today_log.insight = None
 
     db.add(current_user)
     db.commit()

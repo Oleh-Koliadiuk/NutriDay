@@ -82,10 +82,11 @@ export const getDay = (day) =>
 
 export const getHistory = () => apiRequest("/nutrition/history");
 
-export const getDailyInsight = (day) =>
-  apiRequest(`/nutrition/insight?day=${encodeURIComponent(day)}`, {
-    method: "POST",
-  });
+export const getDailyInsight = (day, language = "uk") =>
+  apiRequest(
+    `/nutrition/insight?day=${encodeURIComponent(day)}&language=${encodeURIComponent(language)}`,
+    { method: "POST" },
+  );
 
 export const updateMeal = (id, data) =>
   apiRequest(`/nutrition/meals/${id}`, {

@@ -178,13 +178,23 @@ def delete_meal(
 @router.post("/insight")
 def create_daily_insight(
     day: date | None = Query(default=None),
+    language: str = Query(default="uk", pattern="^(uk|ru|en)$"),
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
     selected_day = _day_or_today(day)
     log = get_or_create_daily_log(db, current_user, selected_day)
     summary = get_day_summary(db, current_user, selected_day)
-    insight = GeminiService().generate_daily_insight(summary.model_dump())
+    insight_data = summary.model_dump()
+    insight_data["language"] = language
+    insight_data["profile"] = {
+        "age": current_user.age,
+        "height": current_user.height,
+        "weight": current_user.weight,
+        "biological_sex": current_user.biological_sex,
+        "goal": current_user.goal,
+    }
+    insight = GeminiService().generate_daily_insight(insight_data)
     log.insight = insight
     db.commit()
     return {"insight": insight}

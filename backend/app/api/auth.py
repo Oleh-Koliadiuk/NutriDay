@@ -80,7 +80,10 @@ def register_user(payload: UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=TokenOut)
 def login_user(payload: UserLogin, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.name == payload.name).first()
+    identifier = payload.name.strip()
+    user = db.query(User).filter(User.name == identifier).first()
+    if user is None and "@" in identifier:
+        user = db.query(User).filter(User.email == identifier.lower()).first()
     if not user or not verify_password(payload.password, user.password_hash):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
 

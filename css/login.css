@@ -119,19 +119,6 @@
   justify-content: space-between;
   gap: 16px;
 }
-.hero-stat {
-  display: flex;
-  align-items: baseline;
-  gap: 9px;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.72rem;
-}
-.hero-stat strong {
-  color: #e2edc8;
-  font:
-    500 1.35rem Georgia,
-    serif;
-}
 .photo-credit {
   color: rgba(255, 255, 255, 0.68);
   font-size: 0.62rem;
@@ -153,22 +140,6 @@
 }
 .auth-heading {
   margin-bottom: 28px;
-}
-.auth-kicker {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  margin-bottom: 15px;
-  color: var(--green);
-  font-size: 0.67rem;
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-.kicker-line {
-  width: 25px;
-  height: 1px;
-  background: #90ad78;
 }
 .auth-heading h2 {
   max-width: 390px;

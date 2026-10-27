@@ -74,8 +74,6 @@ export const translations = {
       "Розумій, що на твоїй тарілці, і знаходь свій баланс без суворих правил.",
     heroPointOne: "Персональна денна норма",
     heroPointTwo: "Аналіз страв текстом і фото",
-    heroStat: "маленький крок щодня",
-    authKicker: "Твій особистий простір",
     authTitle: "Почни з турботи про себе",
     authDescription:
       "Створи профіль, щоб отримати персональну денну норму та відстежувати харчування.",
@@ -322,8 +320,6 @@ export const translations = {
       "Разбирайся, что на твоей тарелке, и находи свой баланс без строгих правил.",
     heroPointOne: "Персональная дневная норма",
     heroPointTwo: "Анализ блюд по тексту и фото",
-    heroStat: "маленький шаг каждый день",
-    authKicker: "Твоё личное пространство",
     authTitle: "Начни заботиться о себе",
     authDescription:
       "Создай профиль, чтобы получить персональную дневную норму и следить за питанием.",
@@ -570,8 +566,6 @@ export const translations = {
       "Understand what is on your plate and find your balance without strict rules.",
     heroPointOne: "A personal daily target",
     heroPointTwo: "Meal analysis by text or photo",
-    heroStat: "one small step each day",
-    authKicker: "Your personal space",
     authTitle: "Start with a little self-care",
     authDescription:
       "Create a profile for a personal daily target and a clearer view of your meals.",
